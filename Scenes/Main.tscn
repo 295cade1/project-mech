@@ -1,0 +1,134 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Terrain/Terrain.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Sounds/Used/Music/Forboding/Dungeon 1.ogg" type="AudioStream" id=3]
+[ext_resource path="res://addons/shader_precompiler/ShaderPrecompiler.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Enemy/Enemy.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Assets/Environment/Water/TutorialWater.tres" type="Material" id=6]
+[ext_resource path="res://Scripts/WaterPlane.gd" type="Script" id=7]
+
+[sub_resource type="BoxShape" id=1]
+
+[sub_resource type="PlaneMesh" id=2]
+material = ExtResource( 6 )
+size = Vector2( 1000, 1000 )
+subdivide_width = 50
+subdivide_depth = 50
+
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 500, 40, 500 )
+
+[sub_resource type="ProceduralSky" id=4]
+sky_top_color = Color( 0.184314, 0.235294, 0.262745, 1 )
+sky_horizon_color = Color( 0.184314, 0.235294, 0.262745, 1 )
+ground_bottom_color = Color( 0.184314, 0.235294, 0.262745, 1 )
+ground_horizon_color = Color( 0.184314, 0.235294, 0.262745, 1 )
+
+[sub_resource type="Environment" id=5]
+background_mode = 2
+background_sky = SubResource( 4 )
+ambient_light_color = Color( 0.403922, 0.403922, 0.403922, 1 )
+ambient_light_sky_contribution = 0.6
+fog_enabled = true
+fog_color = Color( 0.184314, 0.235294, 0.262745, 1 )
+fog_sun_amount = 1.0
+fog_depth_begin = 200.0
+fog_depth_end = 280.0
+fog_depth_curve = 2.63901
+
+[node name="Root" type="Spatial"]
+
+[node name="ShaderPrecompiler" parent="." instance=ExtResource( 4 )]
+
+[node name="RigidBody" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 379.156, -371.017 )
+mass = 100.0
+
+[node name="CSGBox" type="CSGBox" parent="RigidBody"]
+
+[node name="CollisionShape" type="CollisionShape" parent="RigidBody"]
+shape = SubResource( 1 )
+
+[node name="RigidBody2" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 417.176, -371.017 )
+mass = 100.0
+
+[node name="CSGBox" type="CSGBox" parent="RigidBody2"]
+
+[node name="CollisionShape" type="CollisionShape" parent="RigidBody2"]
+shape = SubResource( 1 )
+
+[node name="RigidBody3" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 323.986, -371.017 )
+mass = 100.0
+
+[node name="CSGBox" type="CSGBox" parent="RigidBody3"]
+
+[node name="CollisionShape" type="CollisionShape" parent="RigidBody3"]
+shape = SubResource( 1 )
+
+[node name="RigidBody4" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 250.151, -371.017 )
+mass = 100.0
+
+[node name="CSGBox" type="CSGBox" parent="RigidBody4"]
+
+[node name="CollisionShape" type="CollisionShape" parent="RigidBody4"]
+shape = SubResource( 1 )
+
+[node name="RigidBody5" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 181.144, -371.017 )
+mass = 100.0
+
+[node name="CSGBox" type="CSGBox" parent="RigidBody5"]
+
+[node name="CollisionShape" type="CollisionShape" parent="RigidBody5"]
+shape = SubResource( 1 )
+
+[node name="Enemy" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 30.705, 438.644 )
+
+[node name="WaterMesh" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0542879, 30, 0.00340462 )
+mesh = SubResource( 2 )
+material/0 = null
+script = ExtResource( 7 )
+
+[node name="WaterArea" type="Area" parent="WaterMesh"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -40, 0 )
+space_override = 3
+linear_damp = 1.5
+angular_damp = 1.5
+monitorable = false
+collision_layer = 3
+collision_mask = 3
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="WaterMesh/WaterArea"]
+shape = SubResource( 3 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 5 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 14, 0 )
+light_energy = 0.2
+directional_shadow_mode = 0
+directional_shadow_depth_range = 1
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 65, 0 )
+
+[node name="Terrain" parent="." instance=ExtResource( 1 )]
+resolution = 0.05
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+autoplay = true
+bus = "Music"
+
+[connection signal="body_shape_entered" from="WaterMesh/WaterArea" to="WaterMesh" method="_on_Area_body_shape_entered"]
+[connection signal="body_shape_exited" from="WaterMesh/WaterArea" to="WaterMesh" method="_on_Area_body_shape_entered"]

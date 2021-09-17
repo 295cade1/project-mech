@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://DebugAssets/Debug.tres" type="Material" id=1]
+[ext_resource path="res://Player/RobotHand.tscn" type="PackedScene" id=2]
+[ext_resource path="res://DebugAssets/TestingScripts/RobotHandTesting.gd" type="Script" id=3]
+[ext_resource path="res://addons/orbit_camera/orbit_camera.gd" type="Script" id=4]
+
+[sub_resource type="BoxShape" id=1]
+
+[node name="Spatial" type="Spatial"]
+script = ExtResource( 3 )
+
+[node name="CSGBox" type="CSGBox" parent="."]
+use_collision = true
+width = 21.6821
+depth = 27.1611
+material = ExtResource( 1 )
+
+[node name="RigidBody" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.186442, 2.06942, 0 )
+
+[node name="CSGBox" type="CSGBox" parent="RigidBody"]
+
+[node name="CollisionShape" type="CollisionShape" parent="RigidBody"]
+shape = SubResource( 1 )
+
+[node name="RobotHand" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.12394, 3.94069, -0.224649 )
+
+[node name="Spatial" type="Spatial" parent="."]
+
+[node name="Camera" type="Camera" parent="Spatial"]
+script = ExtResource( 4 )
+DEFAULT_DISTANCE = 5.0
+ANCHOR_NODE_PATH = NodePath("..")

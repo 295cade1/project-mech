@@ -1,0 +1,20 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type spatial;
+
+void vertex() {
+	//VERTEX = vec3(VERTEX.x, texture(tex, UV).g * float(height_range), VERTEX.z);
+}
+
+void fragment() {
+	// same normal vector for every face
+	NORMAL = normalize(cross(dFdx(VERTEX), dFdy(VERTEX)));
+	// green color
+	vec3 material_color = COLOR.rgb;
+	ALBEDO = material_color;
+}
+"
+
+[resource]
+shader = SubResource( 1 )

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Robot Footstep - Heavy Mechanical Metallic Thump Thud Stomp - 05    [005993].wav-dd5f02922b9afded5e328dd473c9b0b9.sample"
+
+[deps]
+
+source_file="res://Sounds/Used/Thud/Robot Footstep - Heavy Mechanical Metallic Thump Thud Stomp - 05    [005993].wav"
+dest_files=[ "res://.import/Robot Footstep - Heavy Mechanical Metallic Thump Thud Stomp - 05    [005993].wav-dd5f02922b9afded5e328dd473c9b0b9.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

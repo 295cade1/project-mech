@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Peace 1.ogg-37cb3ee8d257d64400fdbd4b70f79d58.oggstr"
+
+[deps]
+
+source_file="res://Sounds/Used/Music/Peace/Peace 1.ogg"
+dest_files=[ "res://.import/Peace 1.ogg-37cb3ee8d257d64400fdbd4b70f79d58.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

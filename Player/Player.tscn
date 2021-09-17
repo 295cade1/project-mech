@@ -1,0 +1,220 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://Player/Player.gd" type="Script" id=1]
+[ext_resource path="res://Player/LHandBig.gd" type="Script" id=2]
+[ext_resource path="res://Player/VRController.gd" type="Script" id=3]
+[ext_resource path="res://Player/RobotHand.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Player/PlayerArm.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Player/CameraRotated.gd" type="Script" id=6]
+[ext_resource path="res://Assets/Environment/Water/WaterNoise.tres" type="Texture" id=7]
+[ext_resource path="res://Sounds/Used/Thud/Thud1.wav" type="AudioStream" id=8]
+[ext_resource path="res://Sounds/Used/PlayerDamaged.wav" type="AudioStream" id=9]
+[ext_resource path="res://Assets/Player/Metal.tres" type="Material" id=10]
+[ext_resource path="res://Assets/Player/UnderWaterGlass.shader" type="Shader" id=11]
+[ext_resource path="res://Assets/Player/Grate.tres" type="Material" id=12]
+[ext_resource path="res://Assets/Player/Platform.tres" type="ArrayMesh" id=13]
+[ext_resource path="res://Assets/Player/Bubble.tres" type="ArrayMesh" id=14]
+
+[sub_resource type="SphereShape" id=1]
+radius = 2.0
+
+[sub_resource type="BoxShape" id=2]
+extents = Vector3( 0.381158, 1.37113, 1 )
+
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 0.242926, 0.893499, 0.524674 )
+
+[sub_resource type="BoxShape" id=4]
+extents = Vector3( 0.810714, 1.47193, 1.11377 )
+
+[sub_resource type="ShaderMaterial" id=5]
+render_priority = 1
+shader = ExtResource( 11 )
+shader_param/glass_color = Color( 1, 0.470588, 0, 1 )
+shader_param/water_color = Color( 0, 0.180392, 1, 1 )
+shader_param/height_scale = 10.0
+shader_param/speed = 1.0
+shader_param/water_plane_height = 30.0
+shader_param/opacity = 1.0
+shader_param/noise = ExtResource( 7 )
+
+[node name="Player" type="RigidBody" groups=[
+"Player",
+]]
+collision_layer = 2
+collision_mask = 2
+mass = 100.0
+continuous_cd = true
+contacts_reported = 30
+contact_monitor = true
+can_sleep = false
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+script = ExtResource( 1 )
+
+[node name="ARVROrigin" type="ARVROrigin" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.500931, 0 )
+
+[node name="ARVRCamera" type="ARVRCamera" parent="ARVROrigin"]
+current = true
+far = 300.0
+
+[node name="SpotLight" type="SpotLight" parent="ARVROrigin/ARVRCamera"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3 )
+light_color = Color( 0.996078, 0.682353, 0.203922, 1 )
+shadow_enabled = true
+spot_range = 80.0
+spot_attenuation = 2.2974
+
+[node name="LeftController" type="ARVRController" parent="ARVROrigin"]
+script = ExtResource( 3 )
+big_hand_path = NodePath("../../LeftHandBig")
+
+[node name="CSGSphere" type="CSGSphere" parent="ARVROrigin/LeftController"]
+radius = 0.05
+
+[node name="RightController" type="ARVRController" parent="ARVROrigin"]
+controller_id = 2
+script = ExtResource( 3 )
+big_hand_path = NodePath("../../RightHandBig")
+
+[node name="CSGSphere2" type="CSGSphere" parent="ARVROrigin/RightController"]
+radius = 0.05
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0 )
+shape = SubResource( 1 )
+
+[node name="LeftHandBig" type="RigidBody" parent="." groups=[
+"Player",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10 )
+mass = 100.0
+continuous_cd = true
+contacts_reported = 4
+contact_monitor = true
+can_sleep = false
+script = ExtResource( 2 )
+target_hand_path = NodePath("../ARVROrigin/LeftController")
+
+[node name="OpenHandShape1" type="CollisionShape" parent="LeftHandBig"]
+transform = Transform( -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, -0.03847, -4.5393e-08, 0 )
+shape = SubResource( 2 )
+
+[node name="OpenHandShape2" type="CollisionShape" parent="LeftHandBig"]
+transform = Transform( -0.965926, 8.74228e-08, -0.258819, -8.44439e-08, -1, -2.26267e-08, -0.258819, 0, 0.965926, 0.080798, -3.49662e-08, -1.61805 )
+shape = SubResource( 3 )
+
+[node name="OpenHandShape3" type="CollisionShape" parent="LeftHandBig"]
+transform = Transform( -0.707107, 8.74228e-08, -0.707107, -6.18173e-08, -1, -6.18173e-08, -0.707107, 0, 0.707107, 1, 4.5393e-08, -3.42682 )
+shape = SubResource( 3 )
+
+[node name="OpenHandShape4" type="CollisionShape" parent="LeftHandBig"]
+transform = Transform( -0.866026, 8.74228e-08, -0.5, -7.57104e-08, -1, -4.37114e-08, -0.5, 0, 0.866026, 0.421336, -5.19545e-09, -2.58295 )
+shape = SubResource( 3 )
+
+[node name="ClosedHandShape" type="CollisionShape" parent="LeftHandBig"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4557, 0.327753, -0.117336 )
+shape = SubResource( 4 )
+disabled = true
+
+[node name="CSGBox" type="CSGBox" parent="LeftHandBig"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1 )
+visible = false
+width = 0.75968
+height = 2.71008
+depth = 4.14586
+
+[node name="RobotHand" parent="LeftHandBig" instance=ExtResource( 4 )]
+transform = Transform( 4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, 1, 4.37114e-08, 1.91069e-15, 0, 0, 0 )
+
+[node name="ThudPlayer" type="AudioStreamPlayer3D" parent="LeftHandBig"]
+stream = ExtResource( 8 )
+unit_db = 15.0
+bus = "Smashes"
+
+[node name="RightHandBig" type="RigidBody" parent="." groups=[
+"Player",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10 )
+mass = 100.0
+continuous_cd = true
+contacts_reported = 4
+contact_monitor = true
+can_sleep = false
+script = ExtResource( 2 )
+target_hand_path = NodePath("../ARVROrigin/RightController")
+
+[node name="CSGBox2" type="CSGBox" parent="RightHandBig"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1 )
+visible = false
+width = 0.75968
+height = 2.71008
+depth = 4.14586
+
+[node name="OpenHandShape1" type="CollisionShape" parent="RightHandBig"]
+shape = SubResource( 2 )
+
+[node name="OpenHandShape2" type="CollisionShape" parent="RightHandBig"]
+transform = Transform( 0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, -0.119268, 0, -1.61805 )
+shape = SubResource( 3 )
+
+[node name="OpenHandShape3" type="CollisionShape" parent="RightHandBig"]
+transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -1.03847, 0, -3.42682 )
+shape = SubResource( 3 )
+
+[node name="OpenHandShape4" type="CollisionShape" parent="RightHandBig"]
+transform = Transform( 0.866026, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866026, -0.459806, 0, -2.58295 )
+shape = SubResource( 3 )
+
+[node name="ClosedHandShape" type="CollisionShape" parent="RightHandBig"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.52215, 0.163877, -0.18164 )
+shape = SubResource( 4 )
+disabled = true
+
+[node name="RobotHand" parent="RightHandBig" instance=ExtResource( 4 )]
+transform = Transform( 8.74228e-08, 1, 4.37114e-08, -4.37114e-08, -4.37114e-08, 1, 1, -8.74228e-08, 4.37114e-08, 0, 0, 0 )
+
+[node name="ThudPlayer" type="AudioStreamPlayer3D" parent="RightHandBig"]
+stream = ExtResource( 8 )
+unit_db = 20.0
+bus = "Smashes"
+
+[node name="Rotated" type="Spatial" parent="."]
+script = ExtResource( 6 )
+
+[node name="LeftArm" parent="Rotated" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, 0 )
+targetPath = NodePath("../../LeftHandBig")
+cameraPath = NodePath("../../ARVROrigin/ARVRCamera")
+x_direction = -1
+
+[node name="RightArm" parent="Rotated" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 0 )
+targetPath = NodePath("../../RightHandBig")
+cameraPath = NodePath("../../ARVROrigin/ARVRCamera")
+
+[node name="DamagePlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+bus = "PlayerSounds"
+
+[node name="Cockpit" type="Spatial" parent="."]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 1.3, 0 )
+
+[node name="Bubble" type="MeshInstance" parent="Cockpit"]
+cast_shadow = 2
+mesh = ExtResource( 14 )
+material/0 = ExtResource( 10 )
+material/1 = SubResource( 5 )
+
+[node name="Platform" type="MeshInstance" parent="Cockpit"]
+transform = Transform( 0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, -0.4, 0 )
+cast_shadow = 2
+mesh = ExtResource( 13 )
+material/0 = ExtResource( 12 )
+
+[connection signal="body_shape_entered" from="LeftHandBig" to="LeftHandBig" method="_on_body_shape_entered"]
+[connection signal="body_shape_exited" from="LeftHandBig" to="LeftHandBig" method="_on_body_shape_exited"]
+[connection signal="body_shape_entered" from="RightHandBig" to="RightHandBig" method="_on_body_shape_entered"]
+[connection signal="body_shape_exited" from="RightHandBig" to="RightHandBig" method="_on_body_shape_exited"]

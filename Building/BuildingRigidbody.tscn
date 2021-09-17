@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Building/BuildingRigidbody.gd" type="Script" id=1]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 10, 1, 10 )
+
+[node name="RigidBody" type="RigidBody" groups=[
+"Ground",
+]]
+collision_layer = 3
+collision_mask = 3
+mode = 1
+contacts_reported = 50
+contact_monitor = true
+can_sleep = false
+script = ExtResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 1 )

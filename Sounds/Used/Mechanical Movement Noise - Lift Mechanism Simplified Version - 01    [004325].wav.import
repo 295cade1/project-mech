@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Mechanical Movement Noise - Lift Mechanism Simplified Version - 01    [004325].wav-f023f1c36b2fce722f118c74fdc1e200.sample"
+
+[deps]
+
+source_file="res://Sounds/Used/Mechanical Movement Noise - Lift Mechanism Simplified Version - 01    [004325].wav"
+dest_files=[ "res://.import/Mechanical Movement Noise - Lift Mechanism Simplified Version - 01    [004325].wav-f023f1c36b2fce722f118c74fdc1e200.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -1,0 +1,8 @@
+{
+	"contains_albedo": true,
+	"resolution": 64,
+	"src": {
+		"a": "res://Assets/Environment/TerrainTextures/Grass_Bump.png",
+		"rgb": "res://Assets/Environment/TerrainTextures/Grass.png"
+	}
+}

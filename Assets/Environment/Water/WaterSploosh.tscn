@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/Environment/Water/WaterParticles.tres" type="Material" id=1]
+[ext_resource path="res://DebugAssets/Test.tres" type="Material" id=3]
+
+[sub_resource type="QuadMesh" id=1]
+material = ExtResource( 1 )
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[node name="WaterSploosh" type="CPUParticles"]
+emitting = false
+amount = 32
+lifetime = 3.0
+one_shot = true
+explosiveness = 0.95
+mesh = SubResource( 1 )
+emission_shape = 1
+emission_sphere_radius = 5.0
+flag_rotate_y = true
+direction = Vector3( 0, 1, 0 )
+spread = 25.0
+initial_velocity = 20.0
+damping = 5.0
+angle = 1.0
+angle_random = 1.0
+scale_amount_curve = SubResource( 2 )
+
+[node name="CSGSphere" type="CSGSphere" parent="."]
+visible = false
+radius = 10.0
+material = ExtResource( 3 )

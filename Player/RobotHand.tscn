@@ -1,0 +1,485 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Assets/Hand/RobotHand.glb" type="PackedScene" id=1]
+[ext_resource path="res://Player/RobotHand.gd" type="Script" id=2]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Default"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Palm/Middle:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 15.505 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Palm/Middle/Middle001:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Palm/Middle/Middle001/Middle002:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Palm/Pinky:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 15.505 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Palm/Pinky/Pinky001:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Palm/Pinky/Pinky001/Pinky002:rotation_degrees")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Palm/Pointer:rotation_degrees")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 15.505 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Palm/Pointer/Pointer001:rotation_degrees")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Palm/Pointer/Pointer001/Pointer002:rotation_degrees")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Palm/Thumb:rotation_degrees")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0.963605, 65.9172, 15.5072 ) ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Palm/Thumb/Thumb001:rotation_degrees")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "Idle"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Palm/Middle:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 15.505 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Palm/Middle/Middle001:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 10 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Palm/Middle/Middle001/Middle002:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 10 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Palm/Pinky:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 15.505 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Palm/Pinky/Pinky001:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 10 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Palm/Pinky/Pinky001/Pinky002:rotation_degrees")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 10 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Palm/Pointer:rotation_degrees")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 15.505 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Palm/Pointer/Pointer001:rotation_degrees")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 10 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Palm/Pointer/Pointer001/Pointer002:rotation_degrees")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 10 ) ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Palm/Thumb:rotation_degrees")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0.964, 65.917, 20 ) ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Palm/Thumb/Thumb001:rotation_degrees")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 30 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "Punch"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Palm/Middle:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 70 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Palm/Middle/Middle001:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 90 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Palm/Middle/Middle001/Middle002:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 140 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Palm/Pinky:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 80 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Palm/Pinky/Pinky001:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 80 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Palm/Pinky/Pinky001/Pinky002:rotation_degrees")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 130 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Palm/Pointer:rotation_degrees")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 80 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Palm/Pointer/Pointer001:rotation_degrees")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 80 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Palm/Pointer/Pointer001/Pointer002:rotation_degrees")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 150 ) ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Palm/Thumb:rotation_degrees")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0.964, 65.917, 60 ) ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Palm/Thumb/Thumb001:rotation_degrees")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 90 ) ]
+}
+
+[sub_resource type="AnimationNodeAnimation" id=4]
+animation = "Idle"
+
+[sub_resource type="AnimationNodeAnimation" id=5]
+animation = "Punch"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=6]
+xfade_time = 0.7
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=7]
+xfade_time = 0.7
+
+[sub_resource type="AnimationNodeStateMachine" id=8]
+states/Idle/node = SubResource( 4 )
+states/Idle/position = Vector2( 92, 69 )
+states/Punch/node = SubResource( 5 )
+states/Punch/position = Vector2( 411, 69 )
+transitions = [ "Idle", "Punch", SubResource( 6 ), "Punch", "Idle", SubResource( 7 ) ]
+start_node = "Idle"
+graph_offset = Vector2( -226, -7 )
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=9]
+
+[node name="RobotHand" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="Middle" parent="Palm" index="0"]
+transform = Transform( 0.963607, -0.267322, 0, 0.267322, 0.963607, 0, 0, 0, 1, -1.04639, 0.0550007, 0 )
+
+[node name="Middle001" parent="Palm/Middle" index="0"]
+transform = Transform( 0.984808, -0.173648, 0, 0.173648, 0.984808, 0, 0, 0, 1, -0.958179, -0.00704235, 0 )
+
+[node name="Middle002" parent="Palm/Middle/Middle001" index="0"]
+transform = Transform( 0.984808, -0.173648, 0, 0.173648, 0.984808, 0, 0, 0, 1, -0.999999, 0, 0 )
+
+[node name="RayCast" type="RayCast" parent="Palm/Middle/Middle001" index="1"]
+transform = Transform( 1, 2.98023e-08, 0, -2.98023e-08, 1, 0, 0, 0, 1, -0.73057, 0.167539, -0.00152111 )
+enabled = true
+cast_to = Vector3( 0, -0.4, 0 )
+
+[node name="Pinky" parent="Palm" index="1"]
+transform = Transform( 0.963607, -0.267322, 0, 0.267322, 0.963607, 0, 0, 0, 1, -1.04639, 0.0550007, -0.6 )
+
+[node name="Pinky001" parent="Palm/Pinky" index="0"]
+transform = Transform( 0.984808, -0.173648, 0, 0.173648, 0.984808, 0, 0, 0, 1, -0.958179, -0.00704235, 0 )
+
+[node name="Pinky002" parent="Palm/Pinky/Pinky001" index="0"]
+transform = Transform( 0.984808, -0.173648, 0, 0.173648, 0.984808, 0, 0, 0, 1, -0.999999, 0, 0 )
+
+[node name="Pointer" parent="Palm" index="2"]
+transform = Transform( 0.963607, -0.267322, 0, 0.267322, 0.963607, 0, 0, 0, 1, -1.04639, 0.0550007, 0.6 )
+
+[node name="Pointer001" parent="Palm/Pointer" index="0"]
+transform = Transform( 0.984808, -0.173648, 0, 0.173648, 0.984808, 0, 0, 0, 1, -0.958179, -0.00704235, 0 )
+
+[node name="Pointer002" parent="Palm/Pointer/Pointer001" index="0"]
+transform = Transform( 0.984808, -0.173648, 0, 0.173648, 0.984808, 0, 0, 0, 1, -0.999999, 0, 0 )
+
+[node name="Thumb" parent="Palm" index="3"]
+transform = Transform( 0.388704, -0.125131, 0.912826, 0.341972, 0.93956, -0.0168242, -0.855549, 0.3187, 0.408002, -0.437036, 0.113592, 0.863894 )
+
+[node name="Thumb001" parent="Palm/Thumb" index="0"]
+transform = Transform( 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0, 1, -0.976555, 0, 0 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
+anims/Default = SubResource( 1 )
+anims/Idle = SubResource( 2 )
+anims/Punch = SubResource( 3 )
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="2"]
+tree_root = SubResource( 8 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+process_mode = 0
+parameters/playback = SubResource( 9 )

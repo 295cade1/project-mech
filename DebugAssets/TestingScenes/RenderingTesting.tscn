@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scripts/MovingSphere.tres" type="Material" id=1]
+[ext_resource path="res://addons/orbit_camera/orbit_camera.gd" type="Script" id=2]
+[ext_resource path="res://DebugAssets/TestingScripts/MultiMeshShaderTest.gd" type="Script" id=3]
+
+[sub_resource type="SphereMesh" id=1]
+material = ExtResource( 1 )
+radial_segments = 8
+rings = 8
+
+[sub_resource type="MultiMesh" id=2]
+transform_format = 1
+custom_data_format = 2
+mesh = SubResource( 1 )
+
+[node name="Spatial" type="Spatial"]
+
+[node name="Spatial" type="Spatial" parent="."]
+
+[node name="Camera" type="Camera" parent="Spatial"]
+script = ExtResource( 2 )
+DEFAULT_DISTANCE = 5.0
+ANCHOR_NODE_PATH = NodePath("..")
+
+[node name="MultiMeshInstance" type="MultiMeshInstance" parent="."]
+multimesh = SubResource( 2 )
+script = ExtResource( 3 )
+
+[node name="Position3D" type="Position3D" parent="MultiMeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.81709 )
+
+[node name="Position3D2" type="Position3D" parent="MultiMeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.459649 )
+
+[node name="Position3D3" type="Position3D" parent="MultiMeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.93449, 1.59017 )
+
+[node name="Position3D4" type="Position3D" parent="MultiMeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.657496, 3.32331 )
+
+[node name="Position3D5" type="Position3D" parent="MultiMeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.70712, 3.70932 )

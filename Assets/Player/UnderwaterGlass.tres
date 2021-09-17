@@ -1,0 +1,15 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=2]
+
+[ext_resource path="res://Assets/Player/UnderWaterGlass.shader" type="Shader" id=1]
+[ext_resource path="res://Assets/Environment/Water/WaterNoise.tres" type="Texture" id=2]
+
+[resource]
+render_priority = 1
+shader = ExtResource( 1 )
+shader_param/glass_color = Color( 1, 0.470588, 0, 1 )
+shader_param/water_color = Color( 0, 0.180392, 1, 1 )
+shader_param/height_scale = 10.0
+shader_param/speed = 1.0
+shader_param/water_plane_height = 30.0
+shader_param/opacity = 1.0
+shader_param/noise = ExtResource( 2 )

@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Assets/Environment/Water/TutorialWater.tres" type="Material" id=2]
+
+[sub_resource type="PlaneMesh" id=1]
+material = ExtResource( 2 )
+size = Vector2( 100, 100 )
+subdivide_width = 50
+subdivide_depth = 50
+
+[node name="Spatial" type="Spatial"]
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.942671, 3.69311 )
+fov = 90.0
+
+[node name="TutorialWater" type="MeshInstance" parent="."]
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
