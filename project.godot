@@ -9,11 +9,6 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "",
-"class": "GitAPI",
-"language": "NativeScript",
-"path": "res://git_api.gdns"
-}, {
 "base": "OculusTracker",
 "class": "OculusHandTracker",
 "language": "GDScript",
@@ -30,7 +25,6 @@ _global_script_classes=[ {
 "path": "res://addons/godot_ovrmobile/example_scenes/oculus_tracker.gd"
 } ]
 _global_script_class_icons={
-"GitAPI": "",
 "OculusHandTracker": "",
 "OculusTouchController": "",
 "OculusTracker": ""
@@ -48,7 +42,7 @@ enabled=PoolStringArray(  )
 
 [gdnative]
 
-singletons=[ "res://addons/godot-openvr/godot_openvr.gdnlib", "res://addons/godot_ovrmobile/godot_ovrmobile.gdnlib", "res://git_api.gdnlib" ]
+singletons=[ "res://addons/godot-openvr/godot_openvr.gdnlib", "res://addons/godot_ovrmobile/godot_ovrmobile.gdnlib" ]
 
 [global]
 
