@@ -45,19 +45,11 @@ func initialize(index, leg_base_index,baseBrain, baseHeart):
 	max_force = max_force * 3
 	breaking_point = breaking_point * 3
 
-
-
-
 	self.physics_material_override = load("res://Enemy/Foot.tres")
-
-	
-	
 
 func get_leg_length(index, leg_base):
 	var limbs = get_node("..").limbs
 	return self.global_transform.origin.distance_to(limbs[leg_base].global_transform.origin)
-
-
 
 func get_heart_offset():
 	return self.global_transform.origin - heart.global_transform.origin
@@ -119,10 +111,6 @@ func _integrate_forces(state):
 	var velocity_difference = target_velocity-current_velocity
 	state.add_central_force(velocity_difference/(velocity_difference.length()/(force * mass)))
 				
-				
-
-		
-
 func need_to_move():
 	return brain.movement_direction.length() > 3
 
@@ -133,7 +121,6 @@ func take_ticket():
 	brain.feet_tickets-=1
 func return_ticket():
 	brain.feet_tickets+=1
-
 
 func set_up_position():
 	target_position = heart.global_transform.origin
@@ -154,7 +141,6 @@ func set_stopped_position():
 	target_position = self.global_transform.origin
 	#print(self.name + "STOP")
 	
-
 func init_start_position():
 	start_position = self.global_transform.origin
 
