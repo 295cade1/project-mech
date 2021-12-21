@@ -1,24 +1,31 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Terrain/Terrain.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Enemy/Enemy.tscn" type="PackedScene" id=2]
 [ext_resource path="res://DebugAssets/TestingScripts/Shooter.gd" type="Script" id=3]
 [ext_resource path="res://addons/maujoe.camera_control/scripts/camera_control.gd" type="Script" id=4]
+[ext_resource path="res://Building/Building.tscn" type="PackedScene" id=6]
 
 [node name="Root" type="Spatial"]
 
 [node name="Terrain" parent="." instance=ExtResource( 1 )]
 resolution = 0.05
 
-[node name="Player" type="Camera" parent="."]
+[node name="Cam" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 60, 0 )
 far = 1000.0
 script = ExtResource( 4 )
 sensitivity = 0.2
 max_speed = Vector3( 100, 100, 100 )
 
-[node name="Spatial" type="Spatial" parent="Player"]
+[node name="Spatial" type="Spatial" parent="Cam"]
 script = ExtResource( 3 )
 
 [node name="Enemy" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 321.873, 100, 0 )
+
+[node name="Building" parent="." instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 81.154, 53, 0 )
+
+[node name="Player" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 86.154, 70, 0 )

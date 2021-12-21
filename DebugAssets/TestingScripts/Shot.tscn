@@ -6,7 +6,7 @@
 
 [node name="RigidBody" type="RigidBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 300, 0 )
-mass = 100.0
+mass = 1000.0
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 1 )

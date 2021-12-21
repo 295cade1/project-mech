@@ -11,19 +11,20 @@ onready var cam = get_node(cameraPath) as Spatial
 var look_dir = Vector3.FORWARD
 const normal_arm_length = 10
 const arm_width = 1
-const rotation_accuracy = 1
+const rotation_accuracy = 512
 
 export var x_direction = 1
 
 export var method = 0
 
 func _ready():
+	method2(Vector3(1,1,1), Vector3(1,2,3))
 	aft_arm.mesh.size = Vector3(arm_width,arm_width,normal_arm_length)
 	fore_arm.mesh.size = Vector3(arm_width,arm_width,normal_arm_length)
 
 func _physics_process(delta):
 	var base_to_hand = self.global_transform.origin.direction_to(target.global_transform.origin)
-	var elbow_offset_from_hand = (target.transform.basis.z * normal_arm_length)# + (-target.global_transform.basis.x * x_direction)
+	var elbow_offset_from_hand = (target.transform.basis.z * normal_arm_length) + (-target.global_transform.basis.x * x_direction)
 	
 	var distance_to_target = self.global_transform.origin.distance_to(target.global_transform.origin)
 
@@ -60,23 +61,18 @@ func _physics_process(delta):
 		elbow.global_transform.origin = elbow_position
 	
 func get_elbow_offset(base_to_hand, target_dir):
-	return method2(base_to_hand, target_dir)
+	if(method == 1):
+		return method1(base_to_hand, target_dir)
+	if(method == 2):
+		return method2(base_to_hand, target_dir)
+	if(method == 3):
+		return method3(target_dir, base_to_hand.rotated(base_to_hand.cross(Vector3.UP).normalized(), PI/2), base_to_hand)
 
 func method1(base_to_hand, target_dir):
-	var base_to_hand_normalized = base_to_hand.normalized()
-	if(!base_to_hand_normalized.is_normalized()):
-		return Vector3.UP
-	var right_dir = base_to_hand_normalized.rotated(Vector3.UP, deg2rad(90))
-	var up_dir = base_to_hand_normalized.rotated(right_dir, deg2rad(-90))
-	var target_angle = up_dir.angle_to(target_dir)
-	var dir_1 = up_dir.rotated(base_to_hand_normalized, -x_direction *  target_angle)
-	var dir_2 = up_dir.rotated(base_to_hand_normalized, x_direction * target_angle)
-
-	var elbow_dir = lerp(dir_2, dir_1, (target_dir.dot(dir_1) + 1) / 2)
-	return elbow_dir.normalized()
+	return base_to_hand.cross(Vector3.UP).normalized()
 
 func method2(base_to_hand, target_dir):
-	return target_dir.rotated(base_to_hand.cross(target_dir).normalized(),  (PI/2) - base_to_hand.angle_to(target_dir)).normalized()
+	return base_to_hand.rotated(base_to_hand.cross(target_dir).normalized(),  (PI/2)).normalized()
 
 func method3(direction, cross_product, direction_to_base):
 	var new_dir = cross_product
@@ -90,7 +86,7 @@ func method3(direction, cross_product, direction_to_base):
 		if(product > best_product):
 			best_product = product
 			best_rotation = i
-		if(product > 0.8):
+		if(product > 0.99):
 			return new_dir
 	if(best_rotation == 0):
 		return cross_product

@@ -25,10 +25,9 @@ func _ready():
 	self.add_child(terrain_mesh)
 	setup_basic_plane()
 	update_terrain_from_image()
-	get_child(1).get_child(0).add_to_group("Ground")
-	get_child(1).get_child(0).set_collision_layer_bit( 1, true )
-	get_child(1).get_child(0).set_collision_mask_bit( 1, true )
-	get_child(0)._start_placing()
+	get_child(0).get_child(0).add_to_group("Ground")
+	get_child(0).get_child(0).set_collision_layer_bit( 1, true )
+	get_child(0).get_child(0).set_collision_mask_bit( 1, true )
 
 func setup_basic_plane():
 	var plane_mesh = PlaneMesh.new()
