@@ -68,6 +68,9 @@ func movement(delta):
 		move_time -= (delta * (randf() - 0.1)) * 2
 		
 		building_model.transform = move_start.interpolate_with(move_target, 1 - (move_time/max_move_time))
+		$DamagedParticles.emitting = true
+	else:
+		$DamagedParticles.emitting = false
 
 func move_building(time:float, location:Transform):
 	max_move_time = time
@@ -86,10 +89,7 @@ func destroy():
 
 	move_building(4, target_loc)
 
-	$DamagedParticles.restart()
-	$DamagedParticles.amount = 50 * size
-	$DamagedParticles.lifetime = 5
-	$DamagedParticles.emitting = true
+
 
 func damaged(impulse):
 
@@ -100,5 +100,3 @@ func damaged(impulse):
 	move_building(0.5,
 	 building_model.transform.rotated(rotation_vector, -min(abs(impulse.length() / 3600), 0.2))
 	)
-	$DamagedParticles.amount = impulse.length() / 4
-	$DamagedParticles.restart()
