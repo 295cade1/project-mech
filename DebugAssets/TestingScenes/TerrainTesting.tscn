@@ -22,7 +22,7 @@ max_speed = Vector3( 100, 100, 100 )
 script = ExtResource( 3 )
 
 [node name="Enemy" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 321.873, 100, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 147.315, 100, 0 )
 
 [node name="Building" parent="." instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 81.154, 53, 0 )

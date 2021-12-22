@@ -8,8 +8,8 @@ var HighRiseLocation = preload("res://Building/High-Rise/HighRiseBuilding.tscn")
 var PowerTowerLocation = preload("res://Building/PowerTower/PowerTower.tscn")
 
 var building_model
-var max_force = size * 1000
-var damage_point = 100
+var max_force = size * 20
+var damage_point = 1
 
 var move_time = 0
 var max_move_time = 0
@@ -48,12 +48,10 @@ func damage_detection(delta):
 			if(!objects_detected.has(object)):
 				objects_detected.append(object)
 				total_impulse += object.linear_velocity * pow(object.mass, 1.0/3.0)
-	var total_force = total_impulse.length()
-
+	var total_force = total_impulse.length() * delta
 
 	if(total_force > 0):
 		print(total_force)
-
 	if(total_force>max_force):
 		max_force -= total_force
 		destroy()
