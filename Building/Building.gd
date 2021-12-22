@@ -38,15 +38,18 @@ func damage_detection(delta):
 		return
 	
 	var objects = building_model.get_node("CollisionDetection").get_colliding_bodies()
+	var objects_detected = []
 
 	var total_impulse = Vector3(0,0,0)
 	for object in objects:
 		if(object is RigidBody):
 			if(object.is_in_group("Player")):
 				continue
-			if(object.linear_velocity.length() > total_impulse.length()):
-				total_impulse = object.linear_velocity * pow(object.mass, 1.0/3.0)
+			if(!objects_detected.has(object)):
+				objects_detected.append(object)
+				total_impulse += object.linear_velocity * pow(object.mass, 1.0/3.0)
 	var total_force = total_impulse.length()
+
 
 	if(total_force > 0):
 		print(total_force)
