@@ -23,8 +23,9 @@ script = ExtResource( 2 )
 
 [node name="CollisionDetection" type="RigidBody" parent="." index="3"]
 mode = 1
-contacts_reported = 50
+contacts_reported = 100
 contact_monitor = true
+can_sleep = false
 
 [node name="CollisionShape2" type="CollisionShape" parent="CollisionDetection" index="0"]
 transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, -0.447 )

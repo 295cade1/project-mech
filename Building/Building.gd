@@ -8,15 +8,13 @@ var HighRiseLocation = preload("res://Building/High-Rise/HighRiseBuilding.tscn")
 var PowerTowerLocation = preload("res://Building/PowerTower/PowerTower.tscn")
 
 var building_model
-var max_force = size * 10000
-var damage_point = 5000
+var max_force = size * 1000
+var damage_point = 100
 
 var move_time = 0
 var max_move_time = 0
 var move_start:Transform
 var move_target:Transform
-
-var invincibility_time = 0
 
 func _ready():
 	match(type):
@@ -30,8 +28,6 @@ func _ready():
 		BuildingType.HighRise:
 			$DamagedParticles.emission_box_extents = building_model.get_node("CollisionDetection/CollisionShape").shape.extents
 			$DamagedParticles.transform.origin = building_model.get_node("CollisionDetection/CollisionShape").transform.origin
-		BuildingType.PowerTower:
-			pass
 			
 func _physics_process(delta):
 	damage_detection(delta)
@@ -39,9 +35,6 @@ func _physics_process(delta):
 
 func damage_detection(delta):
 	if(max_force < 0):
-		return
-	if(invincibility_time > 0):
-		invincibility_time -= delta
 		return
 	
 	var objects = building_model.get_node("CollisionDetection").get_colliding_bodies()
@@ -51,9 +44,12 @@ func damage_detection(delta):
 		if(object is RigidBody):
 			if(object.is_in_group("Player")):
 				continue
-			total_impulse += object.linear_velocity*pow(object.mass,1.0/3.0)
-	total_impulse = total_impulse
-	var total_force = total_impulse.length()/delta
+			if(object.linear_velocity.length() > total_impulse.length()):
+				total_impulse = object.linear_velocity * pow(object.mass, 1.0/3.0)
+	var total_force = total_impulse.length()
+
+	if(total_force > 0):
+		print(total_force)
 
 	if(total_force>max_force):
 		max_force -= total_force
@@ -61,7 +57,6 @@ func damage_detection(delta):
 	elif(total_force>damage_point):
 		max_force -= total_force
 		damaged(total_impulse)
-		invincibility_time = 2
 
 func movement(delta):
 	if(move_time > 0):
@@ -80,11 +75,19 @@ func move_building(time:float, location:Transform):
 
 func destroy():
 	var target_loc = Transform()
-	if(type == BuildingType.HighRise):
-		var max_height = building_model.get_node("CollisionDetection/CollisionShape").shape.extents.y + building_model.get_node("CollisionDetection/CollisionShape").transform.origin.y
-		var min_height = max_height / 2
-		var drop_height = min_height + (randf() * min_height)
-		target_loc.origin = building_model.transform.origin + Vector3(0,-drop_height,0)
+	match(type):
+		BuildingType.HighRise:
+			var max_height = building_model.get_node("CollisionDetection/CollisionShape").shape.extents.y + building_model.get_node("CollisionDetection/CollisionShape").transform.origin.y
+			var min_height = max_height / 2
+			var drop_height = min_height + (randf() * min_height)
+			target_loc.origin = building_model.transform.origin + Vector3(0,-drop_height,0)
+		BuildingType.PowerTower:
+			var max_height = 25
+			var min_height = max_height / 2
+			var drop_height = min_height + (randf() * min_height)
+			target_loc.origin = building_model.transform.origin + Vector3(0,-drop_height,0)
+			building_model.get_node("Radio Antenna").explode()
+		
 	target_loc = target_loc.rotated(Vector3((randf() * 2) - 1,(randf() * 2) - 1,(randf() * 2) - 1).normalized(), ((randf() * 2) - 1) / 2)
 
 	move_building(4, target_loc)
@@ -98,5 +101,5 @@ func damaged(impulse):
 	var rotation_vector = xz_impulse.rotated(Vector3.UP, PI/2).normalized()
 
 	move_building(0.5,
-	 building_model.transform.rotated(rotation_vector, -min(abs(impulse.length() / 3600), 0.2))
+	 building_model.transform.rotated(rotation_vector, -min(abs(impulse.length() / 3600), 0.2/size))
 	)

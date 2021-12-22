@@ -15,11 +15,13 @@ size = Vector2( 100, 100 )
 
 [node name="Root" type="Spatial"]
 
-[node name="Camera" type="Camera" parent="."]
+[node name="Player" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.830217, 0.557441, 0, -0.557441, 0.830217, 0, 35.4447, 58.0052 )
 
 [node name="Building" parent="." instance=ExtResource( 1 )]
 transform = Transform( 0.419199, 0, 0.907895, 0, 1, 0, -0.907895, 0, 0.419199, 0, 0, 0 )
+type = 1
+size = 10
 
 [node name="RigidBody" type="RigidBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -60.1037, 13.0728, 0 )

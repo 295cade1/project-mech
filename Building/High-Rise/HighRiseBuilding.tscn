@@ -31,7 +31,6 @@ multimesh = SubResource( 1 )
 [node name="CollisionDetection" type="RigidBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
 mode = 1
-continuous_cd = true
 contacts_reported = 100
 contact_monitor = true
 can_sleep = false
