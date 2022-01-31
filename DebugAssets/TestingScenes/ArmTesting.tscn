@@ -17,11 +17,24 @@ size = Vector3( 0.5, 0.5, 1 )
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.73495 )
 script = ExtResource( 2 )
+sensitivity = 0.2
+smoothness = 0.7
+privot = NodePath("../PlayerArm")
+distance = 20.0
 max_speed = Vector3( 5, 5, 5 )
 
 [node name="PlayerArm" parent="." instance=ExtResource( 1 )]
+visible = false
 cameraPath = NodePath("../Camera")
 method = 1
+
+[node name="PlayerArm2" parent="." instance=ExtResource( 1 )]
+cameraPath = NodePath("../Camera")
+method = 3
+
+[node name="PlayerArm3" parent="." instance=ExtResource( 1 )]
+cameraPath = NodePath("../Camera")
+method = 2
 
 [node name="Target" type="Position3D" parent="."]
 script = ExtResource( 3 )
@@ -31,42 +44,22 @@ transform = Transform( -0.989616, 0, 0.143734, 0, 1, 0, -0.143734, 0, -0.989616,
 mesh = SubResource( 1 )
 material/0 = SubResource( 2 )
 
-[node name="MeshInstance5" type="MeshInstance" parent="Target"]
-transform = Transform( -0.902754, -0.282748, -0.324172, -0.426776, 0.683012, 0.592752, 0.053815, 0.673458, -0.737262, -0.458581, 1.10642, -0.25327 )
-mesh = SubResource( 3 )
-material/0 = null
-
-[node name="MeshInstance9" type="MeshInstance" parent="Target"]
-transform = Transform( -0.820279, -0.154701, -0.550644, -0.24383, 0.965444, 0.0919889, 0.517387, 0.209721, -0.829654, -0.94964, 1.42017, -1.11527 )
-mesh = SubResource( 3 )
-material/0 = null
-
 [node name="MeshInstance2" type="MeshInstance" parent="Target"]
-transform = Transform( -0.993096, 0, -0.117295, 0, 0.999999, 0, 0.117295, 0, -0.993096, -0.3494, 0, -1.06866 )
+transform = Transform( 3, 0, 0, 0, 1, 0, 0, 0, 1, -0.3494, 0.425887, -1.10493 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="MeshInstance5" type="MeshInstance" parent="Target"]
+transform = Transform( 0.7874, -0.535523, 1.5453, 0.300947, 1.40115, 0.590617, -1.24074, 0, 1.12394, -1.42248, 0.131537, -0.535327 )
 mesh = SubResource( 3 )
 material/0 = null
 
 [node name="MeshInstance3" type="MeshInstance" parent="Target"]
-transform = Transform( -0.993096, 0, -0.117295, 0, 0.999999, 0, 0.117295, 0, -0.993096, -0.3494, 0.6, -1.06866 )
+transform = Transform( 3, 0, 0, 0, 0.953032, 0.302869, 0, -0.302869, 0.953032, -0.3494, 0.313408, -2.01238 )
 mesh = SubResource( 3 )
 material/0 = null
 
 [node name="MeshInstance4" type="MeshInstance" parent="Target"]
-transform = Transform( -0.993096, 0, -0.117295, 0, 0.999999, 0, 0.117295, 0, -0.993096, -0.3494, -0.6, -1.06866 )
-mesh = SubResource( 3 )
-material/0 = null
-
-[node name="MeshInstance6" type="MeshInstance" parent="Target"]
-transform = Transform( -0.709041, 0, -0.705166, 0, 0.999999, 0, 0.705166, 0, -0.709041, -0.859149, 0, -2.05092 )
-mesh = SubResource( 3 )
-material/0 = null
-
-[node name="MeshInstance7" type="MeshInstance" parent="Target"]
-transform = Transform( -0.709041, 0, -0.705166, 0, 0.999999, 0, 0.705166, 0, -0.709041, -0.859149, 0.6, -2.05092 )
-mesh = SubResource( 3 )
-material/0 = null
-
-[node name="MeshInstance8" type="MeshInstance" parent="Target"]
-transform = Transform( -0.709041, 0, -0.705166, 0, 0.999999, 0, 0.705166, 0, -0.709041, -0.859149, -0.6, -2.05092 )
+transform = Transform( 3, 0, 0, 0, 0.874848, 0.484397, 0, -0.484397, 0.874848, -0.3494, -0.0490394, -2.72502 )
 mesh = SubResource( 3 )
 material/0 = null

@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Building/High-Rise/HighRiseBuilding.gd" type="Script" id=1]
+[ext_resource path="res://Building/High-Rise/High_Rise_Building_Roof.tres" type="ArrayMesh" id=2]
+[ext_resource path="res://Building/High-Rise/High_Rise_Building_Floor.tres" type="ArrayMesh" id=3]
+[ext_resource path="res://Building/High-Rise/High_Rise_Building_Center.mesh" type="ArrayMesh" id=4]
+
+[sub_resource type="MultiMesh" id=1]
+transform_format = 1
+mesh = ExtResource( 4 )
+
+[sub_resource type="BoxShape" id=2]
+
+[node name="HighRiseBuilding" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="Base" type="MeshInstance" parent="."]
+transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 3, 0 )
+mesh = ExtResource( 3 )
+material/0 = null
+
+[node name="Roof" type="MeshInstance" parent="."]
+transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 3, 0 )
+mesh = ExtResource( 2 )
+material/0 = null
+
+[node name="Middle" type="MultiMeshInstance" parent="."]
+transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 3, 0 )
+multimesh = SubResource( 1 )
+
+[node name="CollisionDetection" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
+mode = 1
+contacts_reported = 100
+contact_monitor = true
+can_sleep = false
+
+[node name="CollisionShape" type="CollisionShape" parent="CollisionDetection"]
+shape = SubResource( 2 )

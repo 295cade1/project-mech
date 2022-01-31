@@ -20,11 +20,15 @@ float getHeight(vec2 position, float time) {
 }
 
 void vertex() {
-	vec2 position = VERTEX.xz/10f;
-	float k = getHeight(position, TIME*speed);
-	VERTEX.y += float(height_scale) * (k-0.5);
-	pos = VERTEX;
-	NORMAL = normalize(vec3(k - getHeight(position + vec2(0.1, 0.0), TIME), 0.1, k - getHeight(position + vec2(0.0, 0.1), TIME)));
+	if( distance( VERTEX, player_pos ) < 200.0){
+		vec2 position = VERTEX.xz/10f;
+		float k = getHeight(position, TIME*speed);
+		VERTEX.y += float(height_scale) * (k-0.5);
+		pos = VERTEX;
+		NORMAL = normalize(vec3(k - getHeight(position + vec2(0.1, 0.0), TIME), 0.1, k - getHeight(position + vec2(0.0, 0.1), TIME)));
+	}else{
+		NORMAL = normalize(vec3(0,1,0));
+	}
 }
 
 void fragment() {
@@ -46,5 +50,5 @@ void fragment() {
 shader = SubResource( 1 )
 shader_param/height_scale = 10.0
 shader_param/speed = 1.0
-shader_param/player_pos = null
+shader_param/player_pos = Vector3( 0, 10, 0 )
 shader_param/noise = ExtResource( 1 )
