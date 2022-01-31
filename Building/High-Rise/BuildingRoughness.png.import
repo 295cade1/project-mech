@@ -27,7 +27,11 @@ flags/srgb=2
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
+<<<<<<< Updated upstream:Building/High-Rise/BuildingRoughness.png.import
 process/invert_color=true
+=======
+process/invert_color=false
+>>>>>>> Stashed changes:Building/Building.png.import
 process/normal_map_invert_y=false
 stream=false
 size_limit=0
