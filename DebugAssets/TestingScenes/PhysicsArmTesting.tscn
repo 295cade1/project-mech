@@ -1,0 +1,158 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://DebugAssets/TestingScripts/PhysicsArm.gd" type="Script" id=1]
+
+[sub_resource type="SphereMesh" id=1]
+
+[sub_resource type="SphereShape" id=2]
+
+[sub_resource type="CylinderShape" id=3]
+
+[sub_resource type="CubeMesh" id=4]
+
+[sub_resource type="CapsuleShape" id=5]
+height = 3.0
+
+[sub_resource type="CubeMesh" id=6]
+size = Vector3( 5, 1, 1 )
+
+[sub_resource type="BoxShape" id=9]
+extents = Vector3( 1, 0.5, 1 )
+
+[sub_resource type="CubeMesh" id=10]
+size = Vector3( 2, 1, 2 )
+
+[node name="Spatial" type="Spatial"]
+
+[node name="BaseBody" type="RigidBody" parent="."]
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+
+[node name="MeshInstance" type="MeshInstance" parent="BaseBody"]
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="BaseBody"]
+shape = SubResource( 2 )
+
+[node name="Arm" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0 )
+script = ExtResource( 1 )
+targetPath = NodePath("../Target")
+
+[node name="ShoulderXJoint" type="Generic6DOFJoint" parent="Arm"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0 )
+nodes/node_a = NodePath("../../BaseBody")
+nodes/node_b = NodePath("../ShoulderMesh")
+angular_limit_x/enabled = false
+angular_motor_x/enabled = true
+angular_motor_x/force_limit = 60000.0
+
+[node name="ShoulderMesh" type="RigidBody" parent="Arm"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.19209e-07, 0, 0 )
+mass = 100.0
+continuous_cd = true
+can_sleep = false
+
+[node name="CollisionShape" type="CollisionShape" parent="Arm/ShoulderMesh"]
+transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0 )
+shape = SubResource( 3 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Arm/ShoulderMesh"]
+transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0 )
+mesh = SubResource( 4 )
+skeleton = NodePath("../CollisionShape")
+material/0 = null
+
+[node name="ShoulderPos" type="Spatial" parent="Arm/ShoulderMesh"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0 )
+
+[node name="ShoulderZJoint" type="Generic6DOFJoint" parent="Arm"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+nodes/node_a = NodePath("../ShoulderMesh")
+nodes/node_b = NodePath("../UpperArmMesh")
+solver/priority = 2
+angular_limit_z/enabled = false
+angular_motor_z/enabled = true
+angular_motor_z/force_limit = 600.0
+
+[node name="UpperArmMesh" type="RigidBody" parent="Arm"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 0 )
+mass = 100.0
+continuous_cd = true
+can_sleep = false
+
+[node name="CollisionShape" type="CollisionShape" parent="Arm/UpperArmMesh"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Arm/UpperArmMesh"]
+mesh = SubResource( 6 )
+skeleton = NodePath("../CollisionShape")
+material/0 = null
+
+[node name="ElbowPos" type="Spatial" parent="Arm/UpperArmMesh"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 0 )
+
+[node name="ElbowZJoint" type="Generic6DOFJoint" parent="Arm"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0 )
+nodes/node_a = NodePath("../UpperArmMesh")
+nodes/node_b = NodePath("../LowerArmMesh")
+solver/priority = 3
+angular_limit_z/enabled = false
+angular_motor_z/enabled = true
+angular_motor_z/force_limit = 600.0
+
+[node name="LowerArmMesh" type="RigidBody" parent="Arm"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.5, 0, 0 )
+mass = 100.0
+continuous_cd = true
+can_sleep = false
+
+[node name="CollisionShape" type="CollisionShape" parent="Arm/LowerArmMesh"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Arm/LowerArmMesh"]
+mesh = SubResource( 6 )
+skeleton = NodePath("../CollisionShape")
+material/0 = null
+
+[node name="WristPos" type="Spatial" parent="Arm/LowerArmMesh"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 0 )
+
+[node name="WristBallJoint" type="Generic6DOFJoint" parent="Arm"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 0 )
+nodes/node_a = NodePath("../LowerArmMesh")
+nodes/node_b = NodePath("../Hand")
+solver/priority = 4
+angular_limit_x/enabled = false
+angular_limit_y/enabled = false
+angular_limit_z/enabled = false
+
+[node name="Hand" type="RigidBody" parent="Arm"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12.3307, 0, 0 )
+mass = 100.0
+continuous_cd = true
+can_sleep = false
+
+[node name="CollisionShape" type="CollisionShape" parent="Arm/Hand"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 9 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Arm/Hand"]
+mesh = SubResource( 10 )
+skeleton = NodePath("../CollisionShape")
+material/0 = null
+
+[node name="HandPos" type="Spatial" parent="Arm/Hand"]
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.39547, 0, 13.1258 )
+
+[node name="Target" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.79786, 2.64968, -3.28936 )
