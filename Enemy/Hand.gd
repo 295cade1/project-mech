@@ -94,8 +94,8 @@ func _switch_to_idle():
 	state = IDLE
 
 func _get_windup_location() -> Vector3:
-	var offset_vector = self.global_transform.origin - brain.target_location
-	var base_vector = arm_root.global_transform.origin + hand_base_offset
+	var offset_vector = (self.global_transform.origin - brain.target_location).normalized() * arm_length
+	var base_vector = brain.global_transform.basis.xform(arm_root.global_transform.origin + hand_base_offset)
 	return offset_vector + base_vector
 	
 

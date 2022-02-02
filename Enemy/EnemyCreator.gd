@@ -24,6 +24,8 @@ var regular_size = 1.5
 var straight_size = 1.5
 var joint_size = 2
 
+var size = 0
+
 onready var globalMaterial = load("res://Enemy/materials/Skin.tres")
 onready var heartMaterial = load("res://Enemy/materials/Heart.tres")
 onready var brainMaterial = load("res://Enemy/materials/Brain.tres")
@@ -38,25 +40,73 @@ onready var handScript = load("res://Enemy/Hand.gd")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	create_skeleton()
+	create_kaiju(1, "RB1565@1565l31445l31645a35465a35665")
+
+func create_kaiju(size, string : String):
+	# R - Root
+	# F - Create 1 fixed node (parent node offset, pos offset)
+	# N - Create 1 normal node (parent node offset, pos offset)
+	# J - Create 1 joint node (parent node offset, pos offset)
+	# B - Create 1 body node (parent node offset, pos offset)
+	# @ - Create 1 brain node (parent node offset, pos offset)
+	# a - Create an arm (parent node offset, length, joints, pos offset)
+	# l - Create a leg (parent node offset, length, joints, pos offset)
+	# S - Create a "Spine" chain of body nodes (parent node offset, length, pos offset)
+	var node_num = 0
+	var nodes = []
+
+	for i in range(0, string.length()):
+		match(string[i]):
+			"R":
+				nodes.append(create_root_node())
+				node_num += 1
+			"F":
+				var base_index = nodes[node_num - int(string[i + 1])]
+				var pos_offset = Vector3(float(string[i + 2]) - 5, float(string[i + 3]) - 5, float(string[i + 4]) - 5)
+				nodes.append(create_straight_node(base_index, pos_offset))
+				node_num += 1
+			"N":
+				var base_index = nodes[node_num - int(string[i + 1])]
+				var pos_offset = Vector3(float(string[i + 2]) - 5, float(string[i + 3]) - 5, float(string[i + 4]) - 5)
+				nodes.append(create_limb_node(base_index, pos_offset))
+				node_num += 1
+			"J":
+				var base_index = nodes[node_num - int(string[i + 1])]
+				var pos_offset = Vector3(float(string[i + 2]) - 5, float(string[i + 3]) - 5, float(string[i + 4]) - 5)
+				nodes.append(create_joint_node(base_index, pos_offset))
+				node_num += 1
+			"B":
+				var base_index = nodes[node_num - int(string[i + 1])]
+				var pos_offset = Vector3(float(string[i + 2]) - 5, float(string[i + 3]) - 5, float(string[i + 4]) - 5)
+				nodes.append(create_body_node(base_index, pos_offset))
+				node_num += 1
+			"@":
+				var base_index = nodes[node_num - int(string[i + 1])]
+				var pos_offset = Vector3(float(string[i + 2]) - 5, float(string[i + 3]) - 5, float(string[i + 4]) - 5)
+				nodes.append(create_brain_node(base_index, pos_offset))
+				node_num += 1
+			"a":
+				var base_index = nodes[node_num - int(string[i + 1])]
+				var length = int(string[i + 2])
+				var pos_offset = Vector3(float(string[i + 3]) - 5, float(string[i + 4]) - 5, float(string[i + 5]) - 5)
+				create_arm(base_index, pos_offset, length)
+			"l":
+				var base_index = nodes[node_num - int(string[i + 1])]
+				var length = int(string[i + 2])
+				var pos_offset = Vector3(float(string[i + 3]) - 5, float(string[i + 4]) - 5, float(string[i + 5]) - 5)
+				create_leg(base_index, pos_offset, length)
+			"S":
+				var base_index = nodes[node_num - int(string[i + 1])]
+				var length = int(string[i + 2])
+				var pos_offset = Vector3(float(string[i + 3]) - 5, float(string[i + 4]) - 5, float(string[i + 5]) - 5)
+				nodes.append(create_straight_chain(base_index, pos_offset, length))
+				node_num += 1
+
 	finalize()
-
-func create_skeleton():
-	create_root_node()
-	create_body_node(0,Vector3(0,1,0))
-	create_brain_node(1,Vector3(0,1,0))
-
-	create_leg(0,Vector3(1,-2,0),8)
-	create_leg(0,Vector3(-1,-2,0),8)
-
-	
-	create_arm(1,Vector3(1,0,0),8)
-	create_arm(1,Vector3(-1,0,0),8) 
 
 
 
 func finalize():
-
 	set_limb_new_script(limbs[brain_index],brainScript)
 	limbs[brain_index].initialize(len(feet))
 	for f in range(len(feet)):

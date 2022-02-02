@@ -20,7 +20,6 @@ func initialize(feet_base, brain_base, limbs_base):
 	limbs = limbs_base
 	UPFORCE = UPFORCE * mass
 	MAXFORCE = MAXFORCE * mass
-	print(UPFORCE)
 
 
 func _integrate_forces(state):
