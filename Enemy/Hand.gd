@@ -4,9 +4,9 @@ enum {IDLE, WINDUP, ATTACK, TIRED}
 var state : int = IDLE
 
 var MAXFORCE = 200
-const WINDUPTIME = 5
-const ATTACKTIME = 2
-const TIREDTIME = 10
+const WINDUPTIME = 0.15
+const ATTACKTIME = 0.1
+const TIREDTIME = 0.2
 
 var time = 0
 
@@ -36,15 +36,12 @@ func _integrate_forces(phys_state):
 	if(destroyed):
 		return
 	._integrate_forces(phys_state)
-	#if(state != 0):
-	#	print("state: " + str(state))
-	#	print("Timer: " + str(time))
 	if(time >= 0):
 		time -= phys_state.get_step()
 	var force = 0
 	match state:
 		IDLE:
-			if(_target_in_range()):
+			if(_target_in_range() and brain.request_arm_ticket()):
 				_switch_to_windup()
 		WINDUP:
 			force = 40
@@ -77,17 +74,18 @@ func _target_in_range() -> bool:
 
 func _switch_to_windup():
 	state = WINDUP
-	time = WINDUPTIME
+	time = WINDUPTIME * arm_length
 	target_location = _get_windup_location()
 
 func _switch_to_attack():
 	state = ATTACK
-	time = ATTACKTIME
+	time = ATTACKTIME * arm_length
 	target_location = brain.target_location
 
 func _switch_to_tired():
+	brain.return_arm_ticket()
 	state = TIRED
-	time = TIREDTIME
+	time = TIREDTIME * arm_length
 	target_location = Vector3(INF,INF,INF)
 
 func _switch_to_idle():

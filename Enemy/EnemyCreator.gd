@@ -125,7 +125,7 @@ func clear():
 
 func finalize():
 	set_limb_new_script(limbs[brain_index],brainScript)
-	limbs[brain_index].initialize(len(feet), get_average_arm_length())
+	limbs[brain_index].initialize(feet.size(),hands.size(), get_average_arm_length())
 	for f in range(len(feet)):
 		set_limb_new_script(limbs[feet[f]],footScript)
 		limbs[feet[f]].initialize(feet[f],legs[f],limbs[brain_index],limbs[0])
