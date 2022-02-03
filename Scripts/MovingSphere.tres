@@ -1,9 +1,9 @@
 [gd_resource type="ShaderMaterial" load_steps=6 format=2]
 
-[ext_resource path="res://Textures/SkinTex.png" type="Texture" id=1]
+[ext_resource path="res://Textures/EnemyTexture_Heart.png" type="Texture" id=1]
 [ext_resource path="res://Textures/SkinGlowBlue.png" type="Texture" id=2]
-[ext_resource path="res://Textures/HeartTex.png" type="Texture" id=3]
-[ext_resource path="res://Textures/BrainTex.png" type="Texture" id=4]
+[ext_resource path="res://Textures/EnemyTexture_Base.png" type="Texture" id=3]
+[ext_resource path="res://Textures/EnemyTexture_Brain.png" type="Texture" id=4]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type spatial;
@@ -87,20 +87,22 @@ vec4 triplanar_texture(sampler2D p_sampler,vec3 p_weights,vec3 p_triplanar_pos) 
 void fragment() {
 	vec2 base_uv2 = UV2;
 	vec4 albedo_tex;
+	albedo_tex = triplanar_texture(skin_tex,uv1_power_normal,uv1_triplanar_pos);
+	
+	vec4 emission_tex;
 	int tex = int(round(current_texture));
 	if(tex == 1){
-		albedo_tex = triplanar_texture(brain_tex,uv1_power_normal,uv1_triplanar_pos);
+		emission_tex = triplanar_texture(brain_tex,uv2_power_normal,uv2_triplanar_pos);
 	}else if(tex == 2){
-		albedo_tex = triplanar_texture(heart_tex,uv1_power_normal,uv1_triplanar_pos);
-	}else{
-		albedo_tex = triplanar_texture(skin_tex,uv1_power_normal,uv1_triplanar_pos);
+		emission_tex = triplanar_texture(heart_tex,uv2_power_normal,uv2_triplanar_pos);
 	}
+	
+	EMISSION = (emission.rgb+emission_tex.rgb)*emission_energy * ((sin(TIME / 2.0f) + 2.0f)/3.0f);
 	ALBEDO = albedo.rgb * albedo_tex.rgb * red_tinge;
 	METALLIC = metallic;
 	ROUGHNESS = roughness;
 	SPECULAR = specular;
-	vec3 emission_tex = triplanar_texture(texture_emission,uv2_power_normal,uv2_triplanar_pos).rgb;
-	EMISSION = (emission.rgb+emission_tex)*emission_energy;
+	
 }
 
 "
@@ -113,12 +115,12 @@ shader_param/metallic = null
 shader_param/roughness = 1.0
 shader_param/point_size = 1.0
 shader_param/emission = null
-shader_param/emission_energy = 0.0
-shader_param/uv1_blend_sharpness = 1.0
-shader_param/uv2_blend_sharpness = 1.0
-shader_param/uv1_scale = Vector3( 0.1, 0.1, 0.1 )
-shader_param/uv2_scale = Vector3( 0.1, 0.1, 0.1 )
-shader_param/skin_tex = ExtResource( 1 )
+shader_param/emission_energy = 1.0
+shader_param/uv1_blend_sharpness = 5.0
+shader_param/uv2_blend_sharpness = 5.0
+shader_param/uv1_scale = Vector3( 0.25, 0.25, 0.25 )
+shader_param/uv2_scale = Vector3( 0.25, 0.25, 0.25 )
+shader_param/skin_tex = ExtResource( 3 )
 shader_param/brain_tex = ExtResource( 4 )
-shader_param/heart_tex = ExtResource( 3 )
+shader_param/heart_tex = ExtResource( 1 )
 shader_param/texture_emission = ExtResource( 2 )

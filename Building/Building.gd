@@ -50,8 +50,6 @@ func damage_detection(delta):
 				total_impulse += object.linear_velocity * pow(object.mass, 1.0/3.0)
 	var total_force = total_impulse.length() * delta
 
-	if(total_force > 0):
-		print(total_force)
 	if(total_force>max_force):
 		max_force -= total_force
 		destroy()

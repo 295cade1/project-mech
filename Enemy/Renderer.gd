@@ -5,13 +5,21 @@ var tinged = []
 
 const tinge_time = 5
 
+var rendering = false
+
 # Called when the node enters the scene tree for the first time.
 func initialize():
 	children = get_node("..").limbs
 	multimesh.instance_count = children.size()
 	tinged.resize(children.size())
+	rendering = true
+
+func clear():
+	rendering = false
+
 
 func _process(delta):
+	if(!rendering): return
 	for i in range(children.size()):
 		var position = Transform()
 		position.origin = children[i].transform.origin
