@@ -24,7 +24,7 @@ var regular_size = 1.5
 var straight_size = 1.5
 var joint_size = 2
 
-var size = 0
+var size = 1
 
 onready var globalMaterial = load("res://Enemy/materials/Skin.tres")
 onready var heartMaterial = load("res://Enemy/materials/Heart.tres")
@@ -37,7 +37,8 @@ onready var limbScript = load("res://Enemy/Limb.gd")
 onready var handScript = load("res://Enemy/Hand.gd")
 
 
-func create_kaiju(size, string : String):
+func create_kaiju(base_size, string : String):
+	size = base_size
 	var node_num = 0
 	var nodes = []
 
@@ -124,7 +125,7 @@ func clear():
 
 func finalize():
 	set_limb_new_script(limbs[brain_index],brainScript)
-	limbs[brain_index].initialize(len(feet))
+	limbs[brain_index].initialize(len(feet), get_average_arm_length())
 	for f in range(len(feet)):
 		set_limb_new_script(limbs[feet[f]],footScript)
 		limbs[feet[f]].initialize(feet[f],legs[f],limbs[brain_index],limbs[0])
@@ -137,9 +138,19 @@ func finalize():
 
 	for h in range(len(hands)):
 		set_limb_new_script(limbs[hands[h]],handScript)
-		limbs[hands[h]].initialize(limbs[brain_index], limbs[legs[h]])
+		limbs[hands[h]].initialize(limbs[brain_index], limbs[arms[h]])
 
 	get_child(0).initialize()
+
+func get_average_arm_length():
+	var average = 0
+	for i in range(0, arms.size()):
+		var arm = limbs[arms[i]]
+		var hand = limbs[hands[i]]
+		average += arm.transform.origin.distance_to(hand.transform.origin)
+	return average / arms.size()
+
+
 
 #High Level Functions
 func create_arm(parent_index:int, offset, amount:int):
@@ -177,31 +188,31 @@ func create_joint_chain(parent_index:int, offset, amount:int):
 	return last_id_val
 
 func create_root_node():
-	return create_limb(limb_type.ROOT,joint_type.NONE, heart_size, heartMaterial)
+	return create_limb(limb_type.ROOT,joint_type.NONE, heart_size * size, heartMaterial)
 
 func create_limb_node(parent_index:int, offset):
-	return create_limb(limb_type.CHILD,joint_type.NORMAL,regular_size,globalMaterial,parent_index,offset)
+	return create_limb(limb_type.CHILD,joint_type.NORMAL,regular_size * size,globalMaterial,parent_index,offset)
 
 func create_joint_node(parent_index:int, offset):
-	return create_limb(limb_type.CHILD,joint_type.JOINT,joint_size,globalMaterial,parent_index,offset)
+	return create_limb(limb_type.CHILD,joint_type.JOINT,joint_size * size,globalMaterial,parent_index,offset)
 
 func create_straight_node(parent_index:int, offset):
-	return create_limb(limb_type.CHILD,joint_type.FIXED,straight_size,globalMaterial,parent_index,offset)
+	return create_limb(limb_type.CHILD,joint_type.FIXED,straight_size * size,globalMaterial,parent_index,offset)
 
 func create_body_node(parent_index:int, offset):
-	return create_limb(limb_type.CHILD,joint_type.FIXED,body_size,globalMaterial,parent_index,offset)
+	return create_limb(limb_type.CHILD,joint_type.FIXED,body_size * size,globalMaterial,parent_index,offset)
 
 func create_brain_node(parent_index:int, offset):
-	brain_index = create_limb(limb_type.CHILD,joint_type.FIXED,brain_size,brainMaterial,parent_index,offset)
+	brain_index = create_limb(limb_type.CHILD,joint_type.FIXED,brain_size * size,brainMaterial,parent_index,offset)
 	return brain_index
 
 func create_foot_node(parent_index:int, offset:Vector3):
-	var foot = create_limb(limb_type.CHILD,joint_type.NORMAL,foot_size,globalMaterial,parent_index,offset)
+	var foot = create_limb(limb_type.CHILD,joint_type.NORMAL,foot_size * size,globalMaterial,parent_index,offset)
 	feet.append(foot)
 	return foot
 
 func create_hand_node(parent_index:int, offset:Vector3):
-	var hand = create_limb(limb_type.CHILD,joint_type.NORMAL,hand_size,globalMaterial,parent_index,offset)
+	var hand = create_limb(limb_type.CHILD,joint_type.NORMAL,hand_size * size,globalMaterial,parent_index,offset)
 	hands.append(hand)
 	return hand
 

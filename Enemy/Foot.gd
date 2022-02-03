@@ -121,7 +121,7 @@ func _integrate_forces(state):
 	state.add_central_force(velocity_difference/(velocity_difference.length()/(force * mass)))
 				
 func need_to_move():
-	return brain.movement_direction.length() > 3
+	return brain.movement_direction.length() > lengthOfLeg
 
 func is_free_ticket():
 	return brain.feet_tickets>0 and brain.request_ticket()

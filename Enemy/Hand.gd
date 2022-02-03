@@ -73,7 +73,7 @@ func move_towards_location(target_position, force, phys_state):
 	phys_state.add_central_force(velocity_difference/(velocity_difference.length()/(force * mass)))
 
 func _target_in_range() -> bool:
-	return brain.target_location.distance_to(arm_root.global_transform.origin) < min(arm_length,40)
+	return brain.target_location.distance_to(self.global_transform.origin) < arm_length
 
 func _switch_to_windup():
 	state = WINDUP

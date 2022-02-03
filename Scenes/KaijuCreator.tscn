@@ -52,7 +52,7 @@ A 2 9 (-1,0,0)
 A 2 9 (1,0,0)
 
 /All of the valid command codes are
-/r - root node - has no arguments - must always be the first node
+/r - root node - must always be the first node
 /f - Fixed node - is directly fixed to the previous node
 /j - Joint node - has high flexability
 /n - Normal node - has medium flexability
@@ -111,6 +111,22 @@ margin_right = 301.0
 margin_bottom = 24.0
 editable = false
 placeholder_text = "Output text - Send this to Cade"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VSlider" type="VSlider" parent="Control"]
+anchor_right = 0.5
+anchor_bottom = 7.775
+margin_left = 297.0
+margin_top = -3.0
+margin_right = 293.0
+margin_bottom = 287.0
+min_value = 0.1
+max_value = 2.0
+step = 0.05
+value = 1.0
+tick_count = 20
 __meta__ = {
 "_edit_use_anchors_": false
 }

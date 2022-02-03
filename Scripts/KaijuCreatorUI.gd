@@ -4,6 +4,7 @@ onready var text_box = get_node("TextEdit")
 onready var output_box = get_node("LineEdit")
 onready var enemy_creator = get_node("../Enemy")
 onready var building_spawner = get_node("../BuildingSpawner")
+onready var slider = get_node("VSlider")
 var building = preload("res://Building/Building.tscn")
 var alphabet = "fjnbFJNBrqAL123456789"
 
@@ -56,7 +57,7 @@ func _on_Button_pressed():
 	output_box.text = string
 	output_box.select_all()
 
-	enemy_creator.create_kaiju(1,string)
+	enemy_creator.create_kaiju(slider.value,string)
 
 	building_spawner.get_child(0).queue_free()
 	var new_building = building.instance()

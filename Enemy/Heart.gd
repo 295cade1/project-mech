@@ -18,8 +18,8 @@ func initialize(feet_base, brain_base, limbs_base):
 	self.axis_lock_angular_z = true
 	brain = brain_base
 	limbs = limbs_base
-	UPFORCE = UPFORCE * mass
-	MAXFORCE = MAXFORCE * mass
+	UPFORCE = UPFORCE * mass * (feet.size() / 2)
+	MAXFORCE = MAXFORCE * mass * (feet.size() / 2)
 
 
 func _integrate_forces(state):

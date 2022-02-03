@@ -22,13 +22,13 @@ func _process(delta):
 	if(!rendering): return
 	for i in range(children.size()):
 		var position = Transform()
-		position.origin = children[i].transform.origin
+		position = children[i].transform
 		multimesh.set_instance_transform(i, position)
 		var direction
 		if(i==0):
 			direction = Vector3(0,10000,0)
 		else:
-			direction = get_parent_limb(i).transform.origin - children[i].transform.origin
+			direction = position.basis.xform_inv(get_parent_limb(i).transform.origin - children[i].transform.origin)
 
 		multimesh.set_instance_custom_data(i, Color(direction.x,direction.y,direction.z,children[i].get_child(0).shape.radius))
 
