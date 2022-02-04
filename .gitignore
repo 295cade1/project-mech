@@ -5,6 +5,7 @@
 *.exp
 *.lib
 *.TMP
+.DS_STORE
 logs
 Thumbs.db
 Sounds/RAW/
