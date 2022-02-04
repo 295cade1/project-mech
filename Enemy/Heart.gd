@@ -18,11 +18,18 @@ func initialize(feet_base, brain_base, limbs_base):
 	self.axis_lock_angular_z = true
 	brain = brain_base
 	limbs = limbs_base
-	UPFORCE = UPFORCE * mass * (feet.size() / 2)
-	MAXFORCE = MAXFORCE * mass * (feet.size() / 2)
+	UPFORCE = UPFORCE * mass * (limbs.size())
+	MAXFORCE = MAXFORCE * mass * (limbs.size())
 
 
 func _integrate_forces(state):
+	if(destroyed):
+		destroy_time -= state.step
+	if(destroy_time <= 0):
+		self.transform.origin =  lerp(self.transform.origin, Vector3(0,-100,0),min(abs(destroy_time/10),1))
+	if(destroy_time <= -10):
+		get_node("..").queue_free()
+		
 	if(can_move()):	
 		var brain_movement_dir = self.global_transform.origin.direction_to(get_desired_position())
 		var distance_to_desired_pos = self.global_transform.origin.distance_to(get_desired_position())
@@ -46,7 +53,7 @@ func can_move():
 	for foot in feet:
 		if(foot.is_on_floor && !foot.destroyed):
 			num_of_feet_floored += 1
-	return num_of_feet_floored>=(feet.size()/2)
+	return num_of_feet_floored>=max((feet.size()/2),2)
 
 func get_feet_center():
 	var foot_center = Vector3(0,0,0)
@@ -60,7 +67,12 @@ func get_desired_position():
 
 func get_foot_offset():
 	return (self.global_transform.origin - get_feet_center()) + Vector3(0,0,0)
-		
-		
-		
-		
+
+
+func destroy_connection():
+	if(destroyed):
+		return
+	for c in children_limbs:
+		c.destroy_connection()
+	destroyed = true
+	stop_processing()

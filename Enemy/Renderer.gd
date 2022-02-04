@@ -28,16 +28,17 @@ func _process(delta):
 		if(i==0):
 			direction = Vector3(0,10000,0)
 		else:
+			
 			direction = position.basis.xform_inv(get_parent_limb(i).transform.origin - children[i].transform.origin)
 
 		multimesh.set_instance_custom_data(i, Color(direction.x,direction.y,direction.z,children[i].get_child(0).shape.radius))
 
 		var texture_index = 0
-
-		if(i==get_node("..").brain_index):
-			texture_index = 1
-		elif(i == 0):
-			texture_index = 2
+		if(!children[0].destroyed):	
+			if(i==get_node("..").brain_index):
+				texture_index = 1
+			elif(i == 0):
+				texture_index = 2
 
 		var size = 1
 		if(get_parent_limb(i)!=null):

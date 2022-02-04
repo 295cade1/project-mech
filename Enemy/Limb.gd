@@ -9,6 +9,8 @@ var breaking_point = 50
 
 var sqrt_mass = pow(self.mass,1.0/3.0)
 
+var destroy_time = 10
+
 func setup_limb_info(base_parent_limb, base_parent_joint):
 	parent_limb = base_parent_limb
 	parent_joint = base_parent_joint
@@ -22,22 +24,22 @@ func add_child_limb(child_limb):
 	children_limbs.append(child_limb)
 
 
-
 func _integrate_forces(state):
 	if(destroyed):
-		return
-	var objects = []
-	for j in range(state.get_contact_count()):
-		var object = state.get_contact_collider_object(j)
-		if(objects.find(object) == -1):
-			objects.append(object)
+		destroy_time -= state.step
+	if(destroy_time <= 0):
+		self.transform.origin =  lerp(self.transform.origin, Vector3(0,-100,0),min(abs(destroy_time/10),1))
+	if(destroyed): return
+	var objects = self.get_colliding_bodies()
+	var objects_detected = []
 
 	var total_impulse = 0
 	for object in objects:
-		if(object is RigidBody):
+		if(object is RigidBody and !objects_detected.has(object)):
 			total_impulse += abs(((object.linear_velocity*pow(object.mass,1.0/3.0)) - (self.linear_velocity*sqrt_mass)).length())
 		else:
 			total_impulse += (self.linear_velocity*sqrt_mass).length()
+		objects_detected.append(object)
 	total_impulse = total_impulse/sqrt_mass
 		
 	if(total_impulse>max_force):
@@ -49,7 +51,8 @@ func destroy_connection():
 	if(destroyed):
 		return
 	for c in children_limbs:
-		c.stop_processing()
+		c.destroy_connection()
+	destroyed = true
 	parent_joint.queue_free()
 	stop_processing()
 
@@ -65,10 +68,6 @@ func stop_processing():
 	axis_lock_linear_x = false
 	axis_lock_linear_y = false
 	axis_lock_linear_z = false
-	for c in children_limbs:
-		c.stop_processing()
-	set_process(false)
-	set_physics_process(false)
 
 func damage(amount):
 	max_force-=amount

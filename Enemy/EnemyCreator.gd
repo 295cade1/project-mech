@@ -16,9 +16,9 @@ var brain_index
 const UNITMASS = 1
 
 var foot_size = 3
-var body_size = 2
+var body_size = 3.5
 var heart_size = 5 
-var brain_size = 4
+var brain_size = 4.5
 var hand_size = 3
 var regular_size = 1.5
 var straight_size = 1.5
@@ -125,7 +125,7 @@ func clear():
 
 func finalize():
 	set_limb_new_script(limbs[brain_index],brainScript)
-	limbs[brain_index].initialize(feet.size(),hands.size(), get_average_arm_length())
+	limbs[brain_index].initialize(feet.size(),hands.size(), get_average_arm_length(), limbs[0])
 	for f in range(len(feet)):
 		set_limb_new_script(limbs[feet[f]],footScript)
 		limbs[feet[f]].initialize(feet[f],legs[f],limbs[brain_index],limbs[0])

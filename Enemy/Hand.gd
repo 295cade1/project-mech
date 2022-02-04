@@ -33,9 +33,9 @@ func initialize(base_brain, base_arm_root):
 
 
 func _integrate_forces(phys_state):
+	._integrate_forces(phys_state)
 	if(destroyed):
 		return
-	._integrate_forces(phys_state)
 	if(time >= 0):
 		time -= phys_state.get_step()
 	var force = 0
@@ -44,11 +44,11 @@ func _integrate_forces(phys_state):
 			if(_target_in_range() and brain.request_arm_ticket()):
 				_switch_to_windup()
 		WINDUP:
-			force = 40
+			force = 0.2 * self.mass
 			if(time < 0):
 				_switch_to_attack()
 		ATTACK:
-			force = 200
+			force = 0.8 * self.mass
 			target_location = brain.target_location
 			if(time < 0):
 				_switch_to_tired()

@@ -55,12 +55,11 @@ func get_heart_offset():
 	return self.global_transform.origin - heart.global_transform.origin
 
 func _integrate_forces(state):
+	._integrate_forces(state)
 	if(time >= 0):
 		time -= state.get_step()
 	if(destroyed):
 		return
-	._integrate_forces(state)
-	
 	var objects = []
 	for j in range(state.get_contact_count()):
 		var object = state.get_contact_collider_object(j)

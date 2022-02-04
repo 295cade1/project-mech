@@ -27,14 +27,16 @@ var roar_timer = 0.0
 
 var stop_dist = 0.0
 
-func initialize(num_of_feet, base_hands, arm_length):
+var heart
+
+func initialize(num_of_feet, base_hands, arm_length, heart_ref):
 	cam = get_tree().root.get_node("Root/Player")
 	feet_tickets = int(ceil(num_of_feet/2.0))
 	arm_tickets = int(ceil(base_hands/3.0))
 	stop_dist = arm_length * 0.9
 	feet = num_of_feet
 	hands = base_hands
-
+	heart = heart_ref
 	_setup_roar_player()
 
 
@@ -77,3 +79,10 @@ func _setup_roar_player():
 	player.attenuation_model = player.ATTENUATION_INVERSE_DISTANCE
 	add_child(player)
 	roar_player = player
+
+
+func destroy_connection():
+	if(destroyed) : return
+	destroyed = true
+	heart.destroy_connection()
+	.destroy_connection()
