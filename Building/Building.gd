@@ -8,7 +8,7 @@ var HighRiseLocation = preload("res://Building/High-Rise/HighRiseBuilding.tscn")
 var PowerTowerLocation = preload("res://Building/PowerTower/PowerTower.tscn")
 
 var building_model
-var max_force = size * 20
+var max_force = 1000
 var damage_point = 1
 
 var move_time = 0

@@ -33,7 +33,7 @@ func initialize(num_of_feet, base_hands, arm_length, heart_ref):
 	cam = get_tree().root.get_node("Root/Player")
 	feet_tickets = int(ceil(num_of_feet/2.0))
 	arm_tickets = int(ceil(base_hands/3.0))
-	stop_dist = arm_length * 0.9
+	stop_dist = arm_length * 0.8
 	feet = num_of_feet
 	hands = base_hands
 	heart = heart_ref
