@@ -15,7 +15,7 @@ var movement_pressed = false
 var is_colliding_with_ground = false
 var player_movement_vector = Vector3(0,0,0)
 var position_locked = false
-var previous_player_velocity = Vector3(0,0,0)
+
 
 func _ready():
 	self.set_as_toplevel(true)
@@ -31,6 +31,8 @@ func get_desired_hand_pos():
 	return desired_position
 
 func move_hand(state):
+	#Try using
+	#state.get_space_state().cast_motion()
 	var desired_position = get_desired_hand_pos()
 	
 	var big_hand_pos =  self.transform.origin
@@ -40,23 +42,28 @@ func move_hand(state):
 
 	var target_velocity = target_direction*lerp(0,MAXARMSPEED,mismatch)
 
-	if(is_colliding_with_ground and target_velocity.y < 0 or position_locked):
-		lock(true)
+	if(position_locked):
 		self.player_movement_vector = -target_velocity
-		if(movement_pressed):
-			position_locked = true
-		else:
-			position_locked = false
 	else:
 		player_movement_vector = Vector3(0,0,0)
-		lock(false)
 		state.linear_velocity = state.linear_velocity - player.linear_velocity
-		previous_player_velocity = player.linear_velocity
-		var velocity_difference = target_velocity-state.linear_velocity
-		state.add_central_force(velocity_difference/(velocity_difference.length()/MAXFORCE))
+
+		var velocity_difference = target_velocity - state.linear_velocity
+
+		var hand_velocity = velocity_difference.normalized() * min(velocity_difference.length(),1) * MAXFORCE
+		var phys_cast = PhysicsShapeQueryParameters.new()
+		
+		var free_movement_percentage = state.get_space_state().cast_motion()
+
+		state.add_central_force()
+
+		#TODO: redo rotation
 		var target_rotation = target_hand.transform.basis
+
 		state.transform.basis = target_rotation
+
 		state.angular_velocity = Vector3(0,0,0)
+
 		state.linear_velocity = state.linear_velocity + player.linear_velocity
 
 
