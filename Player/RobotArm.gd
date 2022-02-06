@@ -18,7 +18,6 @@ export var x_direction = 1
 export var method = 0
 
 func _ready():
-	method2(Vector3(1,1,1), Vector3(1,2,3))
 	aft_arm.mesh.size = Vector3(arm_width,arm_width,normal_arm_length)
 	fore_arm.mesh.size = Vector3(arm_width,arm_width,normal_arm_length)
 
@@ -61,33 +60,4 @@ func _physics_process(delta):
 		elbow.global_transform.origin = elbow_position
 	
 func get_elbow_offset(base_to_hand, target_dir):
-	if(method == 1):
-		return method1(base_to_hand, target_dir)
-	if(method == 2):
-		return method2(base_to_hand, target_dir)
-	if(method == 3):
-		return method3(target_dir, base_to_hand.rotated(base_to_hand.cross(Vector3.UP).normalized(), PI/2), base_to_hand)
-
-func method1(base_to_hand, target_dir):
-	return base_to_hand.cross(Vector3.UP).normalized()
-
-func method2(base_to_hand, target_dir):
 	return base_to_hand.rotated(base_to_hand.cross(target_dir).normalized(),  (PI/2)).normalized()
-
-func method3(direction, cross_product, direction_to_base):
-	var new_dir = cross_product
-	if(direction_to_base == Vector3(0,0,0)):
-		return new_dir
-	var best_product = -1
-	var best_rotation = 0
-	for i in range(360/rotation_accuracy):
-		new_dir = new_dir.rotated((direction_to_base.normalized()),deg2rad(rotation_accuracy))
-		var product = new_dir.dot(direction)
-		if(product > best_product):
-			best_product = product
-			best_rotation = i
-		if(product > 0.99):
-			return new_dir
-	if(best_rotation == 0):
-		return cross_product
-	return cross_product.rotated((direction_to_base.normalized()),deg2rad(best_rotation*rotation_accuracy))

@@ -207,8 +207,3 @@ transform = Transform( 0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, -0.4, 0 )
 cast_shadow = 2
 mesh = ExtResource( 13 )
 material/0 = ExtResource( 12 )
-
-[connection signal="body_shape_entered" from="LeftHandBig" to="LeftHandBig" method="_on_body_shape_entered"]
-[connection signal="body_shape_exited" from="LeftHandBig" to="LeftHandBig" method="_on_body_shape_exited"]
-[connection signal="body_shape_entered" from="RightHandBig" to="RightHandBig" method="_on_body_shape_entered"]
-[connection signal="body_shape_exited" from="RightHandBig" to="RightHandBig" method="_on_body_shape_exited"]
