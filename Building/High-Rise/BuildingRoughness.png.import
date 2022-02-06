@@ -2,25 +2,27 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/BuildingRoughness.png-2fc78272b258f90c6f19031723e53122.stex"
+path.s3tc="res://.import/BuildingRoughness.png-2fc78272b258f90c6f19031723e53122.s3tc.stex"
+path.etc="res://.import/BuildingRoughness.png-2fc78272b258f90c6f19031723e53122.etc.stex"
 metadata={
-"vram_texture": false
+"imported_formats": [ "s3tc", "etc" ],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://Building/High-Rise/BuildingRoughness.png"
-dest_files=[ "res://.import/BuildingRoughness.png-2fc78272b258f90c6f19031723e53122.stex" ]
+dest_files=[ "res://.import/BuildingRoughness.png-2fc78272b258f90c6f19031723e53122.s3tc.stex", "res://.import/BuildingRoughness.png-2fc78272b258f90c6f19031723e53122.etc.stex" ]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=2
-flags/repeat=0
-flags/filter=false
+flags/repeat=true
+flags/filter=true
 flags/mipmaps=true
 flags/anisotropic=false
 flags/srgb=2
@@ -31,5 +33,5 @@ process/invert_color=true
 process/normal_map_invert_y=false
 stream=false
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0
