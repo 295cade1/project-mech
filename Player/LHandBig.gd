@@ -3,7 +3,7 @@ extends RigidBody
 const MAXARMSPEED = 50
 const MAXFORCE = 24000
 const MAXMISMATCH = 15
-const ROTSPEED = 10
+const ROTSPEED = 15000
 
 onready var camera = (get_node("../ARVROrigin/ARVRCamera") as ARVRCamera)
 onready var player_origin = (get_node("../ARVROrigin") as ARVROrigin)
@@ -80,17 +80,25 @@ func move_hand(state):
 
 		##ROTATION##
 
+		state.angular_velocity = state.angular_velocity - player.angular_velocity
+
 		var target_rotation = target_hand.global_transform.basis
 		var current_rotation = self.global_transform.basis
 
 		var rotation = Vector3(0,0,0)
 
 		#Gets our target rotation directions
-		rotation.x = _get_angle_to_from_axis(current_rotation.z, target_rotation.z, current_rotation.x)
-		rotation.y = _get_angle_to_from_axis(current_rotation.x, target_rotation.x, current_rotation.y)
-		rotation.z = _get_angle_to_from_axis(current_rotation.y, target_rotation.y, current_rotation.z)
+		rotation.x = _get_angle_to_from_axis(current_rotation.z, target_rotation.z, Vector3(1,0,0)) * PI
+		rotation.y = _get_angle_to_from_axis(current_rotation.x, target_rotation.x, Vector3(0,1,0)) * PI
+		rotation.z = _get_angle_to_from_axis(current_rotation.y, target_rotation.y, Vector3(0,0,1)) * PI
+
+		velocity_difference = rotation - state.angular_velocity
+
+		total_velocity = velocity_difference.normalized() * min(velocity_difference.length(),1) * ROTSPEED
+
 		#Actually set the angular velocity so we rotate towards the target rotation
-		state.angular_velocity = rotation * ROTSPEED
+		state.add_torque(total_velocity)
+		state.angular_velocity = state.angular_velocity + player.angular_velocity
 		
 		
 
