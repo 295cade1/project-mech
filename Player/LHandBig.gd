@@ -28,8 +28,6 @@ func _ready():
 	self.set_as_toplevel(true)
 
 func _integrate_forces(state):
-	if(!position_locked):
-		button_pressed(2)
 	move_hand(state)
 
 func get_desired_hand_pos():
