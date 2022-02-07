@@ -8,7 +8,7 @@ var current_particle = 0
 onready var player = get_node("../Player");
 
 func _process(delta):
-	self.mesh.material.set_shader_param("player_pos", player.global_transform.origin)	
+	self.material_override.set_shader_param("player_pos", player.global_transform.origin)	
 
 
 func _ready():
