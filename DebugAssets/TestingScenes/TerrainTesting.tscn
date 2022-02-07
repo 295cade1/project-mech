@@ -37,7 +37,7 @@ resolution = 0.05
 
 [node name="Player" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 60, 0 )
-far = 1000.0
+far = 280.0
 script = ExtResource( 4 )
 sensitivity = 0.2
 max_speed = Vector3( 100, 100, 100 )
@@ -75,6 +75,9 @@ shape = SubResource( 1 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 5 )
+
+[node name="Spatial" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 160.634, 0, 0 )
 
 [connection signal="body_shape_entered" from="WaterMesh/WaterArea" to="WaterMesh" method="_on_Area_body_shape_entered"]
 [connection signal="body_shape_exited" from="WaterMesh/WaterArea" to="WaterMesh" method="_on_Area_body_shape_entered"]
