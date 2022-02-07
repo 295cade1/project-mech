@@ -1,13 +1,14 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://Terrain/Terrain.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Enemy/Enemy.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scripts/TerrainManager.gd" type="Script" id=2]
 [ext_resource path="res://DebugAssets/TestingScripts/Shooter.gd" type="Script" id=3]
 [ext_resource path="res://addons/maujoe.camera_control/scripts/camera_control.gd" type="Script" id=4]
 [ext_resource path="res://Scripts/WaterPlane.gd" type="Script" id=5]
-[ext_resource path="res://Building/Building.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scripts/KaijuManager.gd" type="Script" id=6]
 [ext_resource path="res://Assets/Environment/Water/TutorialWater.tres" type="Material" id=7]
 [ext_resource path="res://Assets/Environment/Water/Ocean.obj" type="ArrayMesh" id=8]
+[ext_resource path="res://Scripts/GameManager.gd" type="Script" id=9]
+[ext_resource path="res://Scripts/BuildingManager.gd" type="Script" id=10]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 500, 40, 500 )
@@ -28,12 +29,9 @@ fog_color = Color( 0.184314, 0.235294, 0.262745, 1 )
 fog_sun_amount = 1.0
 fog_depth_begin = 200.0
 fog_depth_end = 280.0
-fog_depth_curve = 3.86375
+fog_depth_curve = 0.517633
 
 [node name="Root" type="Spatial"]
-
-[node name="Terrain" parent="." instance=ExtResource( 1 )]
-resolution = 0.05
 
 [node name="Player" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 60, 0 )
@@ -44,12 +42,6 @@ max_speed = Vector3( 100, 100, 100 )
 
 [node name="Spatial" type="Spatial" parent="Player"]
 script = ExtResource( 3 )
-
-[node name="Enemy" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 147.315, 100, 0 )
-
-[node name="Building" parent="." instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 81.154, 53, 0 )
 
 [node name="WaterMesh" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0542879, 30, 0.00340462 )
@@ -76,8 +68,17 @@ shape = SubResource( 1 )
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 5 )
 
-[node name="Spatial" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 160.634, 0, 0 )
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource( 9 )
+
+[node name="KaijuManager" type="Node" parent="GameManager"]
+script = ExtResource( 6 )
+
+[node name="BuildingManager" type="Node" parent="GameManager"]
+script = ExtResource( 10 )
+
+[node name="TerrainManager" type="Node" parent="GameManager"]
+script = ExtResource( 2 )
 
 [connection signal="body_shape_entered" from="WaterMesh/WaterArea" to="WaterMesh" method="_on_Area_body_shape_entered"]
 [connection signal="body_shape_exited" from="WaterMesh/WaterArea" to="WaterMesh" method="_on_Area_body_shape_entered"]

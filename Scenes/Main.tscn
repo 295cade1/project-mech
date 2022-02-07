@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Terrain/Terrain.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
@@ -8,8 +8,6 @@
 [ext_resource path="res://Assets/Environment/Water/TutorialWater.tres" type="Material" id=6]
 [ext_resource path="res://Scripts/WaterPlane.gd" type="Script" id=7]
 [ext_resource path="res://Assets/Environment/Water/Ocean.obj" type="ArrayMesh" id=8]
-
-[sub_resource type="BoxShape" id=1]
 
 [sub_resource type="BoxShape" id=3]
 extents = Vector3( 500, 40, 500 )
@@ -35,51 +33,6 @@ fog_depth_curve = 2.63901
 [node name="Root" type="Spatial"]
 
 [node name="ShaderPrecompiler" parent="." instance=ExtResource( 4 )]
-
-[node name="RigidBody" type="RigidBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 379.156, -371.017 )
-mass = 100.0
-
-[node name="CSGBox" type="CSGBox" parent="RigidBody"]
-
-[node name="CollisionShape" type="CollisionShape" parent="RigidBody"]
-shape = SubResource( 1 )
-
-[node name="RigidBody2" type="RigidBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 417.176, -371.017 )
-mass = 100.0
-
-[node name="CSGBox" type="CSGBox" parent="RigidBody2"]
-
-[node name="CollisionShape" type="CollisionShape" parent="RigidBody2"]
-shape = SubResource( 1 )
-
-[node name="RigidBody3" type="RigidBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 323.986, -371.017 )
-mass = 100.0
-
-[node name="CSGBox" type="CSGBox" parent="RigidBody3"]
-
-[node name="CollisionShape" type="CollisionShape" parent="RigidBody3"]
-shape = SubResource( 1 )
-
-[node name="RigidBody4" type="RigidBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 250.151, -371.017 )
-mass = 100.0
-
-[node name="CSGBox" type="CSGBox" parent="RigidBody4"]
-
-[node name="CollisionShape" type="CollisionShape" parent="RigidBody4"]
-shape = SubResource( 1 )
-
-[node name="RigidBody5" type="RigidBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 181.144, -371.017 )
-mass = 100.0
-
-[node name="CSGBox" type="CSGBox" parent="RigidBody5"]
-
-[node name="CollisionShape" type="CollisionShape" parent="RigidBody5"]
-shape = SubResource( 1 )
 
 [node name="Enemy" parent="." instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 30.705, 438.644 )

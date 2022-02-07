@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Terrain.png-1c37e861455d09792d7e771c8c11b326.stex"
+path="res://.import/Terrain.png-f11894cfee0129d771e95d1cdcfcaec0.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Terrain.png"
-dest_files=[ "res://.import/Terrain.png-1c37e861455d09792d7e771c8c11b326.stex" ]
+source_file="res://GameData/MapData/Terrain.png"
+dest_files=[ "res://.import/Terrain.png-f11894cfee0129d771e95d1cdcfcaec0.stex" ]
 
 [params]
 

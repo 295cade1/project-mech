@@ -36,9 +36,6 @@ onready var heartScript = load("res://Enemy/Heart.gd")
 onready var limbScript = load("res://Enemy/Limb.gd")
 onready var handScript = load("res://Enemy/Hand.gd")
 
-func _ready():
-	create_kaiju(1,"rb1565q1565L35445L35645A29455A29655")
-
 
 func create_kaiju(base_size, string : String):
 	size = base_size

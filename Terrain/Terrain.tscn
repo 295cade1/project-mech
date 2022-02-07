@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Terrain.png" type="Texture" id=1]
+[ext_resource path="res://GameData/MapData/Terrain.png" type="Texture" id=1]
 [ext_resource path="res://Terrain/Terrain.gd" type="Script" id=2]
 [ext_resource path="res://Assets/Environment/Ground/Ground.tres" type="Material" id=3]
 
@@ -12,3 +12,4 @@ source_texture = ExtResource( 1 )
 ground_material = ExtResource( 3 )
 sand_color = Color( 0.917647, 0.831373, 0.666667, 1 )
 grass_color = Color( 0.243137, 0.537255, 0.282353, 1 )
+concrete_color = Color( 0.305882, 0.278431, 0.278431, 1 )
