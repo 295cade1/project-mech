@@ -8,13 +8,17 @@ const ROTSPEED = 15000
 onready var camera = (get_node("../ARVROrigin/ARVRCamera") as ARVRCamera)
 onready var player_origin = (get_node("../ARVROrigin") as ARVROrigin)
 onready var player = get_node("..")
+onready var raycast = (get_node("RayCast") as RayCast)
+
+
 
 export(NodePath) var target_hand_path
 onready var target_hand = get_node(target_hand_path)
 
-var movement_pressed = false
 var player_movement_vector = Vector3(0,0,0)
+
 var position_locked = false
+var pinjoint
 
 var played_thud = false
 
@@ -43,11 +47,10 @@ func move_hand(state):
 
 	
 	if(position_locked):
-		#TODO redo how position locked works
+		
 		self.player_movement_vector = -target_velocity
 	else:
 		##LINEAR MOVEMENT##
-
 		#Resets the player movement vector
 		player_movement_vector = Vector3(0,0,0)
 		#Gets our velocity relative to the player
@@ -63,9 +66,10 @@ func move_hand(state):
 			if(child is CollisionShape):
 				if(child.disabled): continue
 				var phys_cast = PhysicsShapeQueryParameters.new()
-				phys_cast.set_shape(child.shape)
+				phys_cast.shape_rid = (child.shape.get_rid())
 				phys_cast.transform = child.global_transform
-				var new_phys_length = state.get_space_state().cast_motion(phys_cast,target_velocity * state.step)[0]
+				phys_cast.exclude = [get_rid(), player.get_rid()]
+				var new_phys_length = state.get_space_state().cast_motion(phys_cast,(total_velocity / self.mass) * state.step)[0]
 				if(min_phys_length < new_phys_length):
 					min_phys_length = new_phys_length
 		
@@ -99,19 +103,40 @@ func move_hand(state):
 		#Actually set the angular velocity so we rotate towards the target rotation
 		state.add_torque(total_velocity)
 		state.angular_velocity = state.angular_velocity + player.angular_velocity
-		
+
+		## SOUND FX ##
+		if(!played_thud):
+			if(min_phys_length < 0.25):
+				play_thud()
+				played_thud = true
+		else:
+			if(min_phys_length == 1):
+				played_thud = false
 		
 
-func lock(is_locked):
-	if(is_locked && !self.axis_lock_angular_y):
-		play_thud()
-	self.axis_lock_linear_z =  is_locked
-	self.axis_lock_linear_y =  is_locked
-	self.axis_lock_linear_x =  is_locked
-	self.axis_lock_angular_z = is_locked
-	self.axis_lock_angular_y = is_locked
-	self.axis_lock_angular_x = is_locked
+func try_lock():
+	if(raycast.is_colliding()):
+		pinjoint = PinJoint.new()
+		pinjoint.global_transform.origin = self.global_transform.origin
+		pinjoint.set("nodes/node_b", self.get_path())
+		if(raycast.get_collider() is RigidBody):
+			pinjoint.set("nodes/node_a", raycast.get_collider())
+			pinjoint.global_transform.origin = raycast.get_collider().global_transform.origin
+		get_tree().root.add_child(pinjoint)
+		position_locked = true
+		change_hand_collision(2)
+	else:
+		change_hand_collision(1)
+
 	
+
+func unlock():
+	position_locked = false
+	change_hand_collision(0)
+	if(pinjoint != null):
+		pinjoint.queue_free()
+		pinjoint = null
+
 
 func play_thud():
 	(get_node("ThudPlayer") as AudioStreamPlayer3D).play()
@@ -121,26 +146,25 @@ func button_pressed(index):
 		1:
 			pass
 		2: 
-			movement_pressed = true
 			get_node("RobotHand").punch()	
-			hand_collision_punch(true)	
+			try_lock()
 
 func button_released(index):
 	match index:
 		1:
 			pass
 		2: 
-			movement_pressed = false
 			get_node("RobotHand").idle()
-			hand_collision_punch(false)	
+			unlock()
 
 
-func hand_collision_punch(val):
-	get_node("ClosedHandShape").disabled = !val
-	get_node("OpenHandShape1").disabled = val
-	get_node("OpenHandShape2").disabled = val
-	get_node("OpenHandShape3").disabled = val
-	get_node("OpenHandShape4").disabled = val
+func change_hand_collision(val):
+	get_node("ClosedHandShape").disabled = (val == 1)
+	get_node("OpenHandShape1").disabled = (val == 0)
+	get_node("OpenHandShape2").disabled = (val == 0)
+	get_node("OpenHandShape3").disabled = (val == 0)
+	get_node("OpenHandShape4").disabled = (val == 0)
+	get_node("GrabbedHandShape").disabled = (val == 2)
 
 	
 func _get_angle_to_from_axis(dir1 : Vector3, dir2 : Vector3, axis : Vector3):

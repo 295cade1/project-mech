@@ -61,9 +61,9 @@ func _player_movement(state):
 	var extra_movement_vector = big_hand_right.player_movement_vector + big_hand_left.player_movement_vector
 	var max_force = 0
 	if(big_hand_left.player_movement_vector!=Vector3(0,0,0)):
-		max_force += 3000
+		max_force += 6000
 	if(big_hand_right.player_movement_vector!=Vector3(0,0,0)):
-		max_force += 3000
+		max_force += 6000
 	if(extra_movement_vector!=Vector3(0,0,0)):
 		var target_velocity = extra_movement_vector
 		var velocity_difference = target_velocity - self.linear_velocity
