@@ -1,30 +1,36 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=16 format=2]
 
+[ext_resource path="res://Sounds/Used/Thud/Thud1.wav" type="AudioStream" id=1]
 [ext_resource path="res://Player/RobotHand.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Player/LHandBig.gd" type="Script" id=3]
 [ext_resource path="res://DebugAssets/TestingScripts/TestPlayer.gd" type="Script" id=4]
+[ext_resource path="res://DebugAssets/Test3.tres" type="Material" id=5]
 
-[sub_resource type="BoxShape" id=1]
+[sub_resource type="BoxShape" id=11]
 extents = Vector3( 0.381158, 1.37113, 1 )
 
-[sub_resource type="BoxShape" id=2]
+[sub_resource type="BoxShape" id=12]
 extents = Vector3( 0.242926, 0.893499, 0.524674 )
 
-[sub_resource type="BoxShape" id=3]
-extents = Vector3( 0.810714, 1.47193, 1.11377 )
+[sub_resource type="BoxShape" id=13]
+extents = Vector3( 0.841514, 1.38299, 1.42586 )
+
+[sub_resource type="BoxShape" id=14]
+extents = Vector3( 0.317243, 1.47193, 1.11377 )
 
 [sub_resource type="SphereShape" id=6]
 
 [sub_resource type="SphereMesh" id=7]
-
-[sub_resource type="CubeMesh" id=8]
-size = Vector3( 1, 5, 5 )
 
 [sub_resource type="BoxShape" id=9]
 extents = Vector3( 100, 1, 100 )
 
 [sub_resource type="CubeMesh" id=10]
 size = Vector3( 200, 2, 200 )
+
+[sub_resource type="SphereShape" id=15]
+
+[sub_resource type="SphereMesh" id=16]
 
 [node name="Spatial" type="Spatial"]
 
@@ -35,8 +41,8 @@ axis_lock_angular_y = true
 axis_lock_angular_z = true
 script = ExtResource( 4 )
 
-[node name="RightHandBig" type="RigidBody" parent="Player" groups=["Player"]]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.73108 )
+[node name="RightHandBig2" type="RigidBody" parent="Player" groups=["Player"]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10 )
 mass = 100.0
 continuous_cd = true
 contacts_reported = 4
@@ -45,35 +51,50 @@ can_sleep = false
 script = ExtResource( 3 )
 target_hand_path = NodePath("../Target")
 
-[node name="CSGBox2" type="CSGBox" parent="Player/RightHandBig"]
+[node name="CSGBox2" type="CSGBox" parent="Player/RightHandBig2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1 )
 visible = false
 width = 0.75968
 height = 2.71008
 depth = 4.14586
 
-[node name="OpenHandShape1" type="CollisionShape" parent="Player/RightHandBig"]
-shape = SubResource( 1 )
+[node name="OpenHandShape1" type="CollisionShape" parent="Player/RightHandBig2"]
+shape = SubResource( 11 )
 
-[node name="OpenHandShape2" type="CollisionShape" parent="Player/RightHandBig"]
+[node name="OpenHandShape2" type="CollisionShape" parent="Player/RightHandBig2"]
 transform = Transform( 0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, -0.119268, 0, -1.61805 )
-shape = SubResource( 2 )
+shape = SubResource( 12 )
 
-[node name="OpenHandShape3" type="CollisionShape" parent="Player/RightHandBig"]
+[node name="OpenHandShape3" type="CollisionShape" parent="Player/RightHandBig2"]
 transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -1.03847, 0, -3.42682 )
-shape = SubResource( 2 )
+shape = SubResource( 12 )
 
-[node name="OpenHandShape4" type="CollisionShape" parent="Player/RightHandBig"]
+[node name="OpenHandShape4" type="CollisionShape" parent="Player/RightHandBig2"]
 transform = Transform( 0.866026, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866026, -0.459806, 0, -2.58295 )
-shape = SubResource( 2 )
+shape = SubResource( 12 )
 
-[node name="ClosedHandShape" type="CollisionShape" parent="Player/RightHandBig"]
+[node name="ClosedHandShape" type="CollisionShape" parent="Player/RightHandBig2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.52215, 0.163877, -0.18164 )
-shape = SubResource( 3 )
+shape = SubResource( 13 )
 disabled = true
 
-[node name="RobotHand" parent="Player/RightHandBig" instance=ExtResource( 2 )]
+[node name="RobotHand" parent="Player/RightHandBig2" instance=ExtResource( 2 )]
 transform = Transform( 8.74228e-08, 1, 4.37114e-08, -4.37114e-08, -4.37114e-08, 1, 1, -8.74228e-08, 4.37114e-08, 0, 0, 0 )
+
+[node name="ThudPlayer" type="AudioStreamPlayer3D" parent="Player/RightHandBig2"]
+stream = ExtResource( 1 )
+unit_db = 20.0
+bus = "Smashes"
+
+[node name="RayCast" type="RayCast" parent="Player/RightHandBig2"]
+transform = Transform( -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.332854, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, 2, 0 )
+
+[node name="GrabbedHandShape" type="CollisionShape" parent="Player/RightHandBig2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00893882, 0.327753, -0.117336 )
+shape = SubResource( 14 )
+disabled = true
 
 [node name="Target" type="Spatial" parent="Player"]
 transform = Transform( 0.655923, 0.378697, -0.652958, 0.565478, 0.326479, 0.757394, 0.5, -0.866025, -2.85417e-08, 0, -1, 0 )
@@ -90,15 +111,9 @@ material/0 = null
 [node name="ARVRCamera" type="ARVRCamera" parent="Player/ARVROrigin"]
 
 [node name="Camera" type="Camera" parent="Player"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -36, 25.948 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 25.948 )
 current = true
 fov = 110.0
-
-[node name="MeshInstance2" type="MeshInstance" parent="Player"]
-transform = Transform( 0.655923, 0.378697, -0.652958, 0.565478, 0.326479, 0.757394, 0.5, -0.866025, -2.85417e-08, 0, -35, 0 )
-mesh = SubResource( 8 )
-skeleton = NodePath("../Target")
-material/0 = null
 
 [node name="StaticBody" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -20, 0 )
@@ -108,4 +123,15 @@ shape = SubResource( 9 )
 
 [node name="MeshInstance" type="MeshInstance" parent="StaticBody"]
 mesh = SubResource( 10 )
+material/0 = null
+
+[node name="RigidBody" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.46175, 0, 9.97999 )
+
+[node name="CollisionShape" type="CollisionShape" parent="RigidBody"]
+shape = SubResource( 15 )
+
+[node name="MeshInstance" type="MeshInstance" parent="RigidBody"]
+material_override = ExtResource( 5 )
+mesh = SubResource( 16 )
 material/0 = null
