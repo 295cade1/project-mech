@@ -122,7 +122,6 @@ func move_hand(state):
 
 func try_lock():
 	if(raycast.is_colliding()):
-		print("colliding")
 		pinjoint = PinJoint.new()
 		pinjoint.global_transform.origin = self.global_transform.origin
 		pinjoint.set("nodes/node_b", self.get_path())
