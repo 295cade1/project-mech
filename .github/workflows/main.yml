@@ -33,12 +33,6 @@ jobs:
           godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/3.4.2/Godot_v3.4.2-stable_export_templates.tpz
           # The relative path containing the "project.godot" file.
           relative_project_path: ./
-          # The version which new releases start at.
-          base_version: 1.0.0
           # If releases should be automatically created.
-          create_release: true
-          # If release notes should be automatically generated based on commit history.
-          generate_release_notes: true
-          # If should export with debugging tools.
-          export_debug: false
-        
+          create_release: false
+
