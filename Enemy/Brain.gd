@@ -42,6 +42,7 @@ func initialize(num_of_feet, base_hands, arm_length, heart_ref):
 
 func _integrate_forces(state):
 	._integrate_forces(state)
+	if(destroyed): return
 	target_location = cam.global_transform.origin
 	movement_direction = Vector3(target_location.x,0,target_location.z) - Vector3(self.global_transform.origin.x,0,self.global_transform.origin.z)
 	if(movement_direction.length() < stop_dist):

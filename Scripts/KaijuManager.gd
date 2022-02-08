@@ -4,10 +4,12 @@ var kaiju_preload = preload("res://Enemy/Enemy.tscn")
 var kaiju_data_folder = "res://GameData/KaijuData/"
 
 var terrain
-var spawn_timer = 1
+var spawn_timer = 10
 var size = 0.7
 
 var rand
+
+var enemy = null
 
 
 func start(terrain_base):
@@ -16,7 +18,7 @@ func start(terrain_base):
 	terrain = terrain_base
 
 func _spawn_kaiju():
-	var enemy = kaiju_preload.instance()
+	enemy = kaiju_preload.instance()
 	var x = 0
 	var y = 1000
 	var z = 0
@@ -65,8 +67,9 @@ func _get_kaiju_file():
 	return kaiju_data_folder + files[file_index]
 
 func _process(delta):
-	spawn_timer -= delta
-	if(spawn_timer < 0):
-		_spawn_kaiju()
-		size += 0.1
-		spawn_timer = 300
+	if(!is_instance_valid(enemy)):
+		spawn_timer -= delta
+		if(spawn_timer < 0):
+			_spawn_kaiju()
+			size += 0.1
+			spawn_timer = 10

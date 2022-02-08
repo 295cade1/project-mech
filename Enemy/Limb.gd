@@ -16,6 +16,7 @@ func setup_limb_info(base_parent_limb, base_parent_joint):
 	parent_joint = base_parent_joint
 	self.contact_monitor = true
 	self.contacts_reported = 10
+	self.can_sleep = false
 	sqrt_mass = pow(self.mass,1.0/3.0)
 	self.add_to_group("Enemy")
 

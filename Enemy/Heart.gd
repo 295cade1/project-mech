@@ -22,14 +22,16 @@ func initialize(feet_base, brain_base, limbs_base):
 	MAXFORCE = MAXFORCE * mass * (limbs.size())
 
 
+
+
 func _integrate_forces(state):
+	print(destroy_time)
 	if(destroyed):
 		destroy_time -= state.step
 	if(destroy_time <= 0):
 		self.transform.origin =  lerp(self.transform.origin, Vector3(0,-100,0),min(abs(destroy_time/10),1))
 	if(destroy_time <= -10):
 		get_node("..").queue_free()
-		
 	if(can_move()):	
 		var brain_movement_dir = self.global_transform.origin.direction_to(get_desired_position())
 		var distance_to_desired_pos = self.global_transform.origin.distance_to(get_desired_position())
