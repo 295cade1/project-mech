@@ -9,7 +9,7 @@ export var enabled = true setget set_enabled
 export(int, "Visible", "Hidden", "Caputered, Confined") var mouse_mode = 2
 
 # Mouslook settings
-export var mouselook = true
+export var mouselook = true 
 export (float, 0.0, 1.0) var sensitivity = 0.5
 export (float, 0.0, 0.999, 0.001) var smoothness = 0.5 setget set_smoothness
 export(NodePath) var privot setget set_privot
