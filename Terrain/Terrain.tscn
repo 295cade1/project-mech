@@ -7,9 +7,9 @@
 [node name="Terrain" type="Spatial" groups=["Ground"]]
 script = ExtResource( 2 )
 size = 1000
-resolution = 0.1
+resolution = 0.05
 source_texture = ExtResource( 1 )
 ground_material = ExtResource( 3 )
 sand_color = Color( 0.917647, 0.831373, 0.666667, 1 )
 grass_color = Color( 0.243137, 0.537255, 0.282353, 1 )
-concrete_color = Color( 0.305882, 0.278431, 0.278431, 1 )
+concrete_color = Color( 0.607843, 0.607843, 0.607843, 1 )

@@ -9,6 +9,9 @@ var building = preload("res://Building/Building.tscn")
 var alphabet = "fjnbFJNBrqAL123456789"
 
 func _ready():
+	var new_building = building.instance()
+	new_building.start(int(rand_range(1,10)),0)
+	building_spawner.add_child(new_building)
 	text_box.clear_colors()
 	text_box.add_color_region("/","\n", Color.darkseagreen)
 	for ch in "fjnbFJNB":
@@ -61,7 +64,7 @@ func _on_Button_pressed():
 
 	building_spawner.get_child(0).queue_free()
 	var new_building = building.instance()
-	new_building.size = int(rand_range(1,10))
+	new_building.start(int(rand_range(1,10)),0)
 	building_spawner.add_child(new_building)
 	
 

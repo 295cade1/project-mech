@@ -10,7 +10,6 @@ onready var terrain_manager = get_node("TerrainManager")
 func _ready():
 	terrain_manager.start()
 	building_manager.start(terrain_manager.terrain)
-	print(building_manager.building_points)
 	terrain_manager.complete(building_manager.building_points)
-	#kaiju_manager.initialize()
+	kaiju_manager.start(terrain_manager.terrain)
 

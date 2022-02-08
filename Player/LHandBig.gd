@@ -56,35 +56,51 @@ func move_hand(state):
 	#Makes sure that velocity is within our max force
 	var total_velocity = velocity_difference.normalized() * min(velocity_difference.length(),1) * MAXFORCE
 
-	#Big for loop to get the distance to the nearest object in the direction we are trying to move
-	var min_phys_length = 0
-	var collision_shapes = self.get_children()
-	if(position_locked):
-		collision_shapes.append(connected_object.get_children())
 
-	for child in collision_shapes:
-		if(child is CollisionShape):
-			if(child.disabled): continue
-			var phys_cast = PhysicsShapeQueryParameters.new()
-			phys_cast.shape_rid = (child.shape.get_rid())
-			phys_cast.transform = child.global_transform
-			phys_cast.exclude = [get_rid(), player.get_rid()]
+	if(position_locked and ((!connected_object is RigidBody) or (connected_object is RigidBody and connected_object.mode == 1))):
+		player_movement_vector = -total_velocity
+	else:
+		#Big for loop to get the distance to the nearest object in the direction we are trying to move
+		var min_phys_length = 0
+		var collision_shapes = self.get_children()
+		if(position_locked):
+			collision_shapes.append(connected_object.get_children())
 
-			if(position_locked):
-				phys_cast.exclude.append(connected_object.get_rid())
+		for child in collision_shapes:
+			if(child is CollisionShape):
+				if(child.disabled): continue
+				var phys_cast = PhysicsShapeQueryParameters.new()
+				phys_cast.shape_rid = (child.shape.get_rid())
+				phys_cast.transform = child.global_transform
+				phys_cast.exclude = [get_rid(), player.get_rid()]
 
-			var new_phys_length = state.get_space_state().cast_motion(phys_cast,(total_velocity / self.mass) * state.step)[0]
-			if(min_phys_length < new_phys_length):
-				min_phys_length = new_phys_length
-	
-	#Sets the velocity of the hand based on how far we can move - if the area is clear, just move the hand
-	var hand_velocity = total_velocity * min_phys_length
-	#Sets the player velocity based on how obstructed the area we are trying to move in is
-	player_movement_vector = -total_velocity * (1 - min_phys_length)
-	#Actually add the hand velocity to the hand
-	state.add_central_force(hand_velocity)
-	#Finally make our velocity global again
-	state.linear_velocity = state.linear_velocity + player.linear_velocity
+				if(position_locked):
+					phys_cast.exclude.append(connected_object.get_rid())
+
+				var new_phys_length = state.get_space_state().cast_motion(phys_cast,((total_velocity + player.linear_velocity) / self.mass) * state.step)[1]
+				if(min_phys_length < new_phys_length):
+					min_phys_length = new_phys_length
+
+		if(connected_object is RigidBody):
+			min_phys_length = clamp(min_phys_length * (connected_object.mass/self.mass),0,1)
+		
+		#Sets the velocity of the hand based on how far we can move - if the area is clear, just move the hand
+		var hand_velocity = total_velocity * min_phys_length
+		#Sets the player velocity based on how obstructed the area we are trying to move in is
+		player_movement_vector = -total_velocity * (1 - min_phys_length)
+		#Actually add the hand velocity to the hand
+		state.add_central_force(hand_velocity)
+		#Finally make our velocity global again
+		state.linear_velocity = state.linear_velocity + player.linear_velocity
+
+		## SOUND FX ##
+		if(!played_thud):
+			if(min_phys_length < 0.25):
+				play_thud()
+				played_thud = true
+		else:
+			if(min_phys_length == 1):
+				played_thud = false
 
 	##ROTATION##
 
@@ -108,14 +124,7 @@ func move_hand(state):
 	state.add_torque(total_velocity)
 	state.angular_velocity = state.angular_velocity + player.angular_velocity
 
-	## SOUND FX ##
-	if(!played_thud):
-		if(min_phys_length < 0.25):
-			play_thud()
-			played_thud = true
-	else:
-		if(min_phys_length == 1):
-			played_thud = false
+	
 	
 
 func try_lock():
@@ -123,7 +132,7 @@ func try_lock():
 		pinjoint = PinJoint.new()
 		pinjoint.global_transform.origin = self.global_transform.origin
 		pinjoint.set("nodes/node_b", self.get_path())
-		if(raycast.get_collider() is RigidBody):
+		if(raycast.get_collider() is RigidBody and raycast.get_collider().mode == 0):
 			pinjoint.set("nodes/node_a", raycast.get_collider().get_path())
 			pinjoint.global_transform.origin = raycast.get_collider().global_transform.origin
 		get_tree().root.add_child(pinjoint)

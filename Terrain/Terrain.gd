@@ -35,7 +35,6 @@ func complete(building_points):
 	get_child(0).get_child(0).add_to_group("Ground")
 	get_child(0).get_child(0).set_collision_layer_bit( 1, true )
 	get_child(0).get_child(0).set_collision_mask_bit( 1, true )
-	source_image.unlock()
 
 func setup_basic_plane():
 	var plane_mesh = PlaneMesh.new()
@@ -47,7 +46,6 @@ func setup_basic_plane():
 	
 
 func update_terrain_from_image(building_points):
-	print(building_points)
 	var mesh = ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,terrain_mesh.mesh.surface_get_arrays(0))
 	var mdt = MeshDataTool.new()
@@ -108,9 +106,6 @@ func set_terrain_height_in_area(location, height, size, color = Color(1,1,1, 0.5
 			
 
 		mdt.set_vertex(i, vertex)
-
-		print("Vert" + str(vertex))
-		print(location)
 	mesh.surface_remove(0)
 	mdt.commit_to_surface(mesh)
 	mesh.regen_normalmaps()

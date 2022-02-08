@@ -1,6 +1,6 @@
 extends MultiMeshInstance
 
-onready var children
+var children
 var tinged = []
 
 const tinge_time = 5
@@ -10,7 +10,15 @@ var rendering = false
 # Called when the node enters the scene tree for the first time.
 func initialize():
 	children = get_node("..").limbs
-	multimesh.instance_count = children.size()
+	
+	var new_mesh = MultiMesh.new()
+	new_mesh.mesh = multimesh.mesh
+	new_mesh.transform_format = MultiMesh.TRANSFORM_3D
+	new_mesh.color_format = MultiMesh.COLOR_FLOAT
+	new_mesh.custom_data_format = MultiMesh.CUSTOM_DATA_FLOAT
+	new_mesh.instance_count = children.size()
+	multimesh = new_mesh
+
 	tinged.resize(children.size())
 	rendering = true
 

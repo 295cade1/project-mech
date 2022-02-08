@@ -5,7 +5,7 @@
 [ext_resource path="res://Building/High-Rise/High_Rise_Building_Floor.tres" type="ArrayMesh" id=3]
 [ext_resource path="res://Building/High-Rise/High_Rise_Building_Center.mesh" type="ArrayMesh" id=4]
 
-[sub_resource type="MultiMesh" id=1]
+[sub_resource type="MultiMesh" id=3]
 transform_format = 1
 mesh = ExtResource( 4 )
 
@@ -26,12 +26,15 @@ material/0 = null
 
 [node name="Middle" type="MultiMeshInstance" parent="."]
 transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 3, 0 )
-multimesh = SubResource( 1 )
+multimesh = SubResource( 3 )
 
 [node name="CollisionDetection" type="RigidBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
+collision_layer = 3
+collision_mask = 3
 mode = 1
-contacts_reported = 100
+mass = 10000.0
+contacts_reported = 10
 contact_monitor = true
 can_sleep = false
 

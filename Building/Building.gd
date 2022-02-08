@@ -2,7 +2,7 @@ extends Spatial
 
 enum BuildingType {HighRise, PowerTower}
 export(BuildingType) var type = BuildingType.HighRise
-export(int) var size = 2
+var size = 2
 
 var HighRiseLocation = preload("res://Building/High-Rise/HighRiseBuilding.tscn")
 var PowerTowerLocation = preload("res://Building/PowerTower/PowerTower.tscn")
@@ -16,18 +16,20 @@ var max_move_time = 0
 var move_start:Transform
 var move_target:Transform
 
-func _ready():
+func start(size_base, type_base):
+	size = size_base
+	type = type_base
 	match(type):
 		BuildingType.HighRise:
 			building_model = HighRiseLocation.instance()
-			building_model.height = size
+			building_model.start(size)
+			$DamagedParticles.emission_box_extents = building_model.get_node("CollisionDetection/CollisionShape").shape.extents
+			$DamagedParticles.transform.origin = building_model.get_node("CollisionDetection/CollisionShape").transform.origin
 		BuildingType.PowerTower:
 			building_model = PowerTowerLocation.instance()	
 	add_child(building_model)
-	match(type):
-		BuildingType.HighRise:
-			$DamagedParticles.emission_box_extents = building_model.get_node("CollisionDetection/CollisionShape").shape.extents
-			$DamagedParticles.transform.origin = building_model.get_node("CollisionDetection/CollisionShape").transform.origin
+
+			
 			
 func _physics_process(delta):
 	damage_detection(delta)

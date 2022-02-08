@@ -27,11 +27,10 @@ func _pick_terrain_data():
 		if(file == ""):
 			break
 		else:
-			if(!file.ends_with(".import")):
-				files.append(file)
+			print(file)
+			if(file.ends_with(".import")):
+				files.append(file.replace(".import",""))
 	dir.list_dir_end()
 	var file_index = int(randi()%files.size())
-
-	print(files[file_index])
 
 	return (load(map_data_folder + files[file_index]) as Texture)

@@ -51,7 +51,7 @@ func _integrate_forces(state):
 	if(roar_timer >= 0):
 		roar_timer -= state.get_step()
 	if(roar_timer < 0.0):
-		#roar_player.play()
+		roar_player.play()
 		roar_timer = rand_range(20,50)
 
 func request_ticket():

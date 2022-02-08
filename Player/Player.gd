@@ -90,10 +90,7 @@ func _damage_detection(state):
 		total_impulse += additional_impulse
 
 	total_impulse = total_impulse/cbrt_mass
-	
-		
-	if(total_impulse > 5):
-		print("Player Damage Impulse: " + str(total_impulse))
+
 	if(total_impulse>BREAKINGPOINT):
 		_damage()
 
