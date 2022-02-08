@@ -3,7 +3,7 @@ extends Node
 var kaiju_preload = preload("res://Enemy/Enemy.tscn")
 var kaiju_data_folder = "res://GameData/KaijuData/"
 
-var terrain
+var terrain 
 var spawn_timer = 10
 var size = 0.7
 
