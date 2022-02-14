@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/BuildingRoughness.png-2fc78272b258f90c6f19031723e53122.s3tc.stex"
-path.etc="res://.import/BuildingRoughness.png-2fc78272b258f90c6f19031723e53122.etc.stex"
+path.s3tc="res://.import/BuildingRoughness.png-b9358cde1df425b406a95fdad7e2e1cc.s3tc.stex"
+path.etc="res://.import/BuildingRoughness.png-b9358cde1df425b406a95fdad7e2e1cc.etc.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Building/High-Rise/BuildingRoughness.png"
-dest_files=[ "res://.import/BuildingRoughness.png-2fc78272b258f90c6f19031723e53122.s3tc.stex", "res://.import/BuildingRoughness.png-2fc78272b258f90c6f19031723e53122.etc.stex" ]
+source_file="res://Building/Material/BuildingRoughness.png"
+dest_files=[ "res://.import/BuildingRoughness.png-b9358cde1df425b406a95fdad7e2e1cc.s3tc.stex", "res://.import/BuildingRoughness.png-b9358cde1df425b406a95fdad7e2e1cc.etc.stex" ]
 
 [params]
 
