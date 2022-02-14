@@ -33,7 +33,7 @@ func initialize(num_of_feet, base_hands, arm_length, heart_ref):
 	cam = get_tree().root.get_node("Root/Player")
 	feet_tickets = int(ceil(num_of_feet/2.0))
 	arm_tickets = int(ceil(base_hands/3.0))
-	stop_dist = arm_length * 0.8
+	stop_dist = arm_length * 0.7
 	feet = num_of_feet
 	hands = base_hands
 	heart = heart_ref
@@ -46,9 +46,10 @@ func _integrate_forces(state):
 	target_location = cam.global_transform.origin
 	movement_direction = Vector3(target_location.x,0,target_location.z) - Vector3(self.global_transform.origin.x,0,self.global_transform.origin.z)
 	if(movement_direction.length() < stop_dist):
-		movement_direction = Vector3(0,0,0)
-
-		
+		if(movement_direction.length() > stop_dist - (stop_dist/10)):
+			movement_direction = -movement_direction
+		else:	
+			movement_direction = Vector3(0,0,0)
 	if(roar_timer >= 0):
 		roar_timer -= state.get_step()
 	if(roar_timer < 0.0):

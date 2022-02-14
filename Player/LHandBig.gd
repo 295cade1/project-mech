@@ -72,7 +72,7 @@ func move_hand(state):
 				var phys_cast = PhysicsShapeQueryParameters.new()
 				phys_cast.shape_rid = (child.shape.get_rid())
 				phys_cast.transform = child.global_transform
-				phys_cast.exclude = [get_rid(), player.get_rid()]
+				phys_cast.exclude = [get_node("../RightHandBig").get_rid(), get_node("../LeftHandBig").get_rid(), player.get_rid()]
 
 				if(position_locked):
 					phys_cast.exclude.append(connected_object.get_rid())
@@ -82,7 +82,7 @@ func move_hand(state):
 					min_phys_length = new_phys_length
 
 		if(connected_object is RigidBody):
-			min_phys_length = clamp(min_phys_length * (connected_object.mass/self.mass),0,1)
+			min_phys_length = clamp(min_phys_length * (self.mass/connected_object.mass),0,1)
 		
 		#Sets the velocity of the hand based on how far we can move - if the area is clear, just move the hand
 		var hand_velocity = total_velocity * min_phys_length

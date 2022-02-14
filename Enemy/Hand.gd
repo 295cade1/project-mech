@@ -3,9 +3,9 @@ extends "res://Enemy/Limb.gd"
 enum {IDLE, WINDUP, ATTACK, TIRED}
 var state : int = IDLE
 
-var MAXFORCE = 200
-const WINDUPTIME = 0.15
-const ATTACKTIME = 0.1
+var MAXFORCE = 400
+const WINDUPTIME = 0.10
+const ATTACKTIME = 0.05
 const TIREDTIME = 0.2
 
 var time = 0
@@ -44,11 +44,11 @@ func _integrate_forces(phys_state):
 			if(_target_in_range() and brain.request_arm_ticket()):
 				_switch_to_windup()
 		WINDUP:
-			force = 0.2 * self.mass
+			force = 60
 			if(time < 0):
 				_switch_to_attack()
 		ATTACK:
-			force = 0.8 * self.mass
+			force = 160
 			target_location = brain.target_location
 			if(time < 0):
 				_switch_to_tired()
@@ -70,7 +70,7 @@ func move_towards_location(target_position, force, phys_state):
 	phys_state.add_central_force(velocity_difference/(velocity_difference.length()/(force * mass)))
 
 func _target_in_range() -> bool:
-	return brain.target_location.distance_to(self.global_transform.origin) < arm_length
+	return brain.target_location.distance_to(self.global_transform.origin) < arm_length - 1
 
 func _switch_to_windup():
 	state = WINDUP

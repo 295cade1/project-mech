@@ -100,4 +100,3 @@ func _damage():
 		health -= 1
 		timer = player_inv_time
 		$DamagePlayer.play()
-		print("Damage")

@@ -33,7 +33,7 @@ _global_script_class_icons={
 [application]
 
 config/name="ProjectMech"
-run/main_scene="res://Scenes/Main.tscn"
+run/main_scene="res://Scenes/KaijuCreator.tscn"
 config/icon="res://icon.png"
 
 [editor_plugins]

@@ -131,6 +131,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -45 )
 
 [node name="Cam" type="Camera" parent="."]
 transform = Transform( -0.576911, -0.346139, 0.739839, 0, 0.90577, 0.423771, -0.816807, 0.244478, -0.522548, 41.4037, 31.4203, -32.1567 )
+fov = 110.0
 far = 1000.0
 script = ExtResource( 5 )
 enabled = false

@@ -25,7 +25,6 @@ func initialize(feet_base, brain_base, limbs_base):
 
 
 func _integrate_forces(state):
-	print(destroy_time)
 	if(destroyed):
 		destroy_time -= state.step
 	if(destroy_time <= 0):

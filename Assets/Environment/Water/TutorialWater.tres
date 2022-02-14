@@ -20,7 +20,7 @@ float getHeight(vec2 position, float time) {
 }
 
 bool vert_test(vec3 vertex){
-	float edge_dist = 165.0;
+	float edge_dist = 200.0;
 	if(vertex.x < -edge_dist){
 		return false;
 	}
@@ -41,8 +41,8 @@ void vertex() {
 	NORMAL = normalize(vec3(0,1,0));
 	vec3 initalVert = VERTEX;
 	VERTEX.xz = VERTEX.xz + player_pos.xz;
-	VERTEX.x = float(int(VERTEX.x/10.0f) * 10);
-	VERTEX.z = float(int(VERTEX.z/10.0f) * 10);
+	VERTEX.x = float(int(VERTEX.x/13.0f) * 13);
+	VERTEX.z = float(int(VERTEX.z/13.0f) * 13);
 	if(vert_test(initalVert)){
 		vec2 position = VERTEX.xz/10f;
 		float k = getHeight(position, TIME*speed);
