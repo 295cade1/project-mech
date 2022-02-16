@@ -4,7 +4,7 @@
 
 [sub_resource type="CubeMesh" id=1]
 material = ExtResource( 1 )
-size = Vector3( 10, 24.25, 10 )
+size = Vector3( 10, 1, 10 )
 
 [node name="Spatial" type="Spatial"]
 

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/BuildingEmission.png-11c4dd98a31f6d690bd4ff953d76d3a7.stex"
+path="res://.import/BuildingUpperEmission.png-c404691ac586cbe17da242e7dcf61b17.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Building/Material/BuildingEmission.png"
-dest_files=[ "res://.import/BuildingEmission.png-11c4dd98a31f6d690bd4ff953d76d3a7.stex" ]
+source_file="res://Building/Material/BuildingUpperEmission.png"
+dest_files=[ "res://.import/BuildingUpperEmission.png-c404691ac586cbe17da242e7dcf61b17.stex" ]
 
 [params]
 
@@ -18,7 +18,7 @@ compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
-compress/normal_map=2
+compress/normal_map=0
 flags/repeat=1
 flags/filter=false
 flags/mipmaps=false

@@ -2,29 +2,27 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/BuildingRoughness.png-b9358cde1df425b406a95fdad7e2e1cc.s3tc.stex"
-path.etc="res://.import/BuildingRoughness.png-b9358cde1df425b406a95fdad7e2e1cc.etc.stex"
+path="res://.import/BuildingRoughness.png-b9358cde1df425b406a95fdad7e2e1cc.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc" ],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://Building/Material/BuildingRoughness.png"
-dest_files=[ "res://.import/BuildingRoughness.png-b9358cde1df425b406a95fdad7e2e1cc.s3tc.stex", "res://.import/BuildingRoughness.png-b9358cde1df425b406a95fdad7e2e1cc.etc.stex" ]
+dest_files=[ "res://.import/BuildingRoughness.png-b9358cde1df425b406a95fdad7e2e1cc.stex" ]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=2
 flags/repeat=true
-flags/filter=true
+flags/filter=false
 flags/mipmaps=true
-flags/anisotropic=false
+flags/anisotropic=true
 flags/srgb=2
 process/fix_alpha_border=true
 process/premult_alpha=false
