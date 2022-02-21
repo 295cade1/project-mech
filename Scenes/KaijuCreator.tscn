@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://DebugAssets/Debug.tres" type="Material" id=1]
 [ext_resource path="res://Enemy/Enemy.tscn" type="PackedScene" id=2]
@@ -6,12 +6,6 @@
 [ext_resource path="res://addons/maujoe.camera_control/scripts/camera_control.gd" type="Script" id=5]
 
 [sub_resource type="Theme" id=3]
-
-[sub_resource type="BoxShape" id=4]
-extents = Vector3( 1, 5, 1 )
-
-[sub_resource type="CubeMesh" id=5]
-size = Vector3( 2, 10, 2 )
 
 [node name="Root" type="Spatial"]
 
@@ -144,17 +138,5 @@ enabled = false
 mouselook = false
 sensitivity = 0.2
 max_speed = Vector3( 100, 100, 100 )
-
-[node name="RigidBody" type="RigidBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1050, 25 )
-mass = 1000.0
-gravity_scale = 20.0
-
-[node name="CollisionShape" type="CollisionShape" parent="RigidBody"]
-shape = SubResource( 4 )
-
-[node name="MeshInstance" type="MeshInstance" parent="RigidBody"]
-mesh = SubResource( 5 )
-material/0 = null
 
 [connection signal="pressed" from="Control/Button" to="Control" method="_on_Button_pressed"]

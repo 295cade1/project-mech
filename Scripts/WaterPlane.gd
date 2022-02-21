@@ -9,6 +9,8 @@ onready var player = get_node("../Player");
 
 func _process(delta):
 	self.material_override.set_shader_param("player_pos", player.global_transform.origin)	
+	self.global_transform.origin = player.global_transform.origin
+	self.global_transform.origin.y = 30
 
 
 func _ready():

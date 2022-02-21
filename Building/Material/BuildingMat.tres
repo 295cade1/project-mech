@@ -19,11 +19,9 @@ uniform sampler2D upper_albedo;
 uniform sampler2D upper_emission;
 uniform sampler2D upper_roughness;
 
-uniform float height;
-
 void vertex(){
 	if(VERTEX.y > 0.0){
-		VERTEX.y = height;
+		VERTEX.y = COLOR.g;
 	}else{
 		VERTEX.y = -0.5;
 	}
@@ -37,7 +35,7 @@ void fragment(){
 	vec4 albedo_tex;
 	vec4 roughness_tex;
 	vec4 emission_tex;
-	if(pos.y < 9f){
+	if(pos.y < 8.5f){
 		albedo_tex = texture(lower_albedo, UV);
 		emission_tex = texture(lower_emission, UV);
 		roughness_tex = texture(lower_roughness, UV);
@@ -53,7 +51,6 @@ void fragment(){
 
 [resource]
 shader = SubResource( 1 )
-shader_param/height = 12.1
 shader_param/lower_albedo = ExtResource( 1 )
 shader_param/lower_emission = ExtResource( 4 )
 shader_param/lower_roughness = ExtResource( 3 )
