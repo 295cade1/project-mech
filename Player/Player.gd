@@ -59,15 +59,7 @@ func _integrate_forces(state):
 
 func _player_movement(state):
 	var extra_movement_vector = big_hand_right.player_movement_vector + big_hand_left.player_movement_vector
-	var max_force = 0
-	if(big_hand_left.player_movement_vector!=Vector3(0,0,0)):
-		max_force += 6000
-	if(big_hand_right.player_movement_vector!=Vector3(0,0,0)):
-		max_force += 6000
-	if(extra_movement_vector!=Vector3(0,0,0)):
-		var target_velocity = extra_movement_vector
-		var velocity_difference = target_velocity - self.linear_velocity
-		state.add_central_force(velocity_difference.normalized() * min(velocity_difference.length(),1) * max_force)
+	state.add_central_force(extra_movement_vector * 10)
 
 #Deals with player damaging
 func _damage_detection(state):

@@ -19,15 +19,18 @@ uniform sampler2D upper_albedo;
 uniform sampler2D upper_emission;
 uniform sampler2D upper_roughness;
 
+
 void vertex(){
 	if(VERTEX.y > 0.0){
 		VERTEX.y = COLOR.g;
 	}else{
 		VERTEX.y = -0.5;
 	}
+	VERTEX.x = VERTEX.x * COLOR.r;
+	VERTEX.z = VERTEX.z * COLOR.b;
 	pos = VERTEX;
 	UV.y = pos.y + 0.5;
-	UV.y = -UV.y / 9.0;
+	UV.y = -UV.y / 18.0;
 	UV.x = UV.x * 3.0;
 }
 
@@ -35,6 +38,7 @@ void fragment(){
 	vec4 albedo_tex;
 	vec4 roughness_tex;
 	vec4 emission_tex;
+	vec4 normal_tex;
 	if(pos.y < 8.5f){
 		albedo_tex = texture(lower_albedo, UV);
 		emission_tex = texture(lower_emission, UV);
@@ -45,7 +49,7 @@ void fragment(){
 		roughness_tex = texture(upper_roughness, UV);
 	}
 	ALBEDO = albedo_tex.rgb;
-	ROUGHNESS = roughness_tex.a;
+	ROUGHNESS = roughness_tex.g;
 	EMISSION = emission_tex.rgb * 5.0;
 }"
 

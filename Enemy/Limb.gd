@@ -37,10 +37,14 @@ func _integrate_forces(state):
 	var total_impulse = 0
 	for object in objects:
 		if(object is RigidBody and !objects_detected.has(object)):
-			total_impulse += abs(((object.linear_velocity*pow(object.mass,1.0/3.0)) - (self.linear_velocity*sqrt_mass)).length())
+			var additional_impulse = abs(((object.linear_velocity*pow(object.mass,1.0/3.0)) - (self.linear_velocity*sqrt_mass)).length())
+			total_impulse += additional_impulse
+			if(object.is_in_group("Building")):
+				object.get_node("..").damage(additional_impulse, object)
 		else:
 			total_impulse += (self.linear_velocity*sqrt_mass).length()
 		objects_detected.append(object)
+
 	total_impulse = total_impulse/sqrt_mass
 		
 	if(total_impulse>max_force):

@@ -2,16 +2,14 @@ extends Control
 
 onready var text_box = get_node("TextEdit")
 onready var output_box = get_node("LineEdit")
-onready var enemy_creator = get_node("../Enemy")
+onready var enemy_creator = get_node("../EnemyCreator")
 onready var building_spawner = get_node("../BuildingSpawner")
+onready var building_creator = get_node("../BuildingMultiMesh")
 onready var slider = get_node("VSlider")
-var building = preload("res://Building/Building.tscn")
 var alphabet = "fjnbFJNBrqAL123456789"
 
 func _ready():
-	var new_building = building.instance()
-	new_building.start(int(rand_range(1,10)),0)
-	building_spawner.add_child(new_building)
+	building_creator.set_mesh_count(1)
 	text_box.clear_colors()
 	text_box.add_color_region("/","\n", Color.darkseagreen)
 	for ch in "fjnbFJNB":
@@ -27,7 +25,6 @@ func _input(event):
 
 
 func _on_Button_pressed():
-	enemy_creator.clear()
 	var string = ""
 	var comment = false
 	var setting_offset = false
@@ -61,12 +58,12 @@ func _on_Button_pressed():
 	output_box.select_all()
 
 	enemy_creator.create_kaiju(slider.value,string)
+	building_creator.set_mesh_count(1)
+	create_building()
 
-	building_spawner.get_child(0).queue_free()
-	var new_building = building.instance()
-	new_building.start(int(rand_range(1,10)),0)
-	building_spawner.add_child(new_building)
-	
+
+func create_building():
+	building_creator.create_building(building_spawner.global_transform, 4, 20)
 
 
 	

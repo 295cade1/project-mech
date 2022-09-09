@@ -12,7 +12,7 @@ export(float) var max_height = 60
 export(Texture) var source_texture
 var source_image
 
-const BUILDINGSIZE = 20
+const BUILDINGSIZE = 25
 
 
 export(Material) var ground_material

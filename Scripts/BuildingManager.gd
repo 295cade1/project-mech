@@ -16,35 +16,36 @@ var terrain
 var rand = RandomNumberGenerator.new()
 
 func start(terrain_base):
-	building_multimesh = get_child(0).multimesh as MultiMesh
-	building_multimesh.instance_count = pow((1000 / 15),2) * CHANCEFORBUILDING
+	building_multimesh = get_child(0)
+	building_multimesh.set_mesh_count(pow((1000 / 30),2) * CHANCEFORBUILDING)
 	rand.randomize()
 	terrain = terrain_base
 	_create_building_grid()
 
+
 func _create_building_grid():
-	var visible_instances = 0
-	for x in range(-500,500,15):
-		for z in range(-500,500,15):
+	for x in range(-500,500,30):
+		for z in range(-500,500,30):
 			for building in building_points:
-				if(Vector2(building.x, building.z).distance_to(Vector2(x,z)) < 15):
+				if(Vector2(building.x, building.z).distance_to(Vector2(x,z)) < 30):
 					continue
 			if(terrain.get_height_from_image(Vector3(x,0,z)) > SEAHEIGHT
-			and float(rand.randf_range(0,1)) > CHANCEFORBUILDING
-			and visible_instances < building_multimesh.instance_count):
-				_place_building(Vector3(x,0,z), 0, visible_instances)
-				visible_instances += 1
-	building_multimesh.visible_instance_count = visible_instances
+			and float(rand.randf_range(0,1)) > CHANCEFORBUILDING):
+				_place_building(Vector3(x,0,z), 0)
 
 
-func _place_building(location, type, instance_num):
+func _place_building(location, type):
+	location.x = location.x + rand.randf_range(-5,5)
+	location.z = location.z + rand.randf_range(-5,5)
+
 	var size = int(rand.randi() % (MAXBUILDINGHEIGHT - MINBUILDINGHEIGHT)) + MINBUILDINGHEIGHT
 	location.y = terrain.get_height_from_image(location)
 	var transform = Transform()
 	transform.origin = location
-
+	transform.basis = transform.basis.rotated(Vector3.UP, rand.randf_range(-PI, PI))
+	
 	var height = (randi() % (MAXBUILDINGHEIGHT - MINBUILDINGHEIGHT)) + MINBUILDINGHEIGHT
-
+	var width = (randi() % (30 - 15)) + 15
 	building_points.append(location)
-	building_multimesh.set_instance_transform(instance_num, transform)
-	building_multimesh.set_instance_color(instance_num, Color(0.0,(height * 3.0) + 0.1,0.0,0.0))
+	building_multimesh.create_building(transform, height, width)
+	
