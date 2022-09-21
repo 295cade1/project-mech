@@ -40,7 +40,7 @@ void vertex() {
 	VERTEX = VERTEX * size;
 	float dist = distance(VERTEX,previous_ball);
 	if(dist < COLOR.a+size){
-		float weight = min(((COLOR.a+size)-dist)+1f,1);
+		float weight = min(((COLOR.a+size)-dist)+1.0f,1.0f);
 		VERTEX = VERTEX*mix(1,(COLOR.a/size)*0.99f,weight);
 		VERTEX += mix(vec3(0,0,0),previous_ball,weight);
 	}
