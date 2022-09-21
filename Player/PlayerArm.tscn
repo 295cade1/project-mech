@@ -7,6 +7,8 @@
 
 [sub_resource type="SphereMesh" id=1]
 material = ExtResource( 2 )
+radial_segments = 8
+rings = 4
 
 [sub_resource type="CubeMesh" id=2]
 material = ExtResource( 2 )
@@ -14,6 +16,8 @@ size = Vector3( 1, 1, 1 )
 
 [sub_resource type="SphereMesh" id=3]
 material = ExtResource( 2 )
+radial_segments = 8
+rings = 4
 
 [sub_resource type="SpatialMaterial" id=4]
 albedo_color = Color( 0, 0.858824, 1, 1 )

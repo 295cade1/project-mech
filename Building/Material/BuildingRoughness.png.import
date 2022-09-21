@@ -1,0 +1,35 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/BuildingRoughness.png-b9358cde1df425b406a95fdad7e2e1cc.stex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://Building/Material/BuildingRoughness.png"
+dest_files=[ "res://.import/BuildingRoughness.png-b9358cde1df425b406a95fdad7e2e1cc.stex" ]
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=2
+flags/repeat=true
+flags/filter=false
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=false
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=true
+process/normal_map_invert_y=false
+stream=false
+size_limit=0
+detect_3d=false
+svg/scale=1.0

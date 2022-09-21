@@ -59,15 +59,7 @@ func _integrate_forces(state):
 
 func _player_movement(state):
 	var extra_movement_vector = big_hand_right.player_movement_vector + big_hand_left.player_movement_vector
-	var maxForce = 0
-	if(big_hand_left.player_movement_vector!=Vector3(0,0,0)):
-		maxForce += 3000
-	if(big_hand_right.player_movement_vector!=Vector3(0,0,0)):
-		maxForce += 3000
-	if(extra_movement_vector!=Vector3(0,0,0)):
-		var target_velocity = extra_movement_vector
-		var velocity_difference = target_velocity - self.linear_velocity
-		state.add_central_force(velocity_difference/(velocity_difference.length()/maxForce))
+	state.add_central_force(extra_movement_vector * 10)
 
 #Deals with player damaging
 func _damage_detection(state):
@@ -90,10 +82,7 @@ func _damage_detection(state):
 		total_impulse += additional_impulse
 
 	total_impulse = total_impulse/cbrt_mass
-	
-		
-	if(total_impulse > 5):
-		print("Player Damage Impulse: " + str(total_impulse))
+
 	if(total_impulse>BREAKINGPOINT):
 		_damage()
 
@@ -103,4 +92,3 @@ func _damage():
 		health -= 1
 		timer = player_inv_time
 		$DamagePlayer.play()
-		print("Damage")

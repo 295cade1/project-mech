@@ -45,31 +45,31 @@ func initialize(index, leg_base_index,baseBrain, baseHeart):
 	max_force = max_force * 3
 	breaking_point = breaking_point * 3
 
-
-
-
 	self.physics_material_override = load("res://Enemy/Foot.tres")
-
-	
-	
 
 func get_leg_length(index, leg_base):
 	var limbs = get_node("..").limbs
 	return self.global_transform.origin.distance_to(limbs[leg_base].global_transform.origin)
 
-
-
 func get_heart_offset():
 	return self.global_transform.origin - heart.global_transform.origin
 
 func _integrate_forces(state):
+	._integrate_forces(state)
 	if(time >= 0):
 		time -= state.get_step()
 	if(destroyed):
 		return
-	._integrate_forces(state)
+	var objects = []
+	for j in range(state.get_contact_count()):
+		var object = state.get_contact_collider_object(j)
+		if(objects.find(object) == -1):
+			objects.append(object)
+	is_on_floor = false
+	for obj in objects:
+		if(!obj.is_in_group("Enemy")):
+			is_on_floor = true
 	
-	_check_is_on_floor()
 
 
 	var force = 0
@@ -119,12 +119,8 @@ func _integrate_forces(state):
 	var velocity_difference = target_velocity-current_velocity
 	state.add_central_force(velocity_difference/(velocity_difference.length()/(force * mass)))
 				
-				
-
-		
-
 func need_to_move():
-	return brain.movement_direction.length() > 3
+	return brain.movement_direction.length() > lengthOfLeg
 
 func is_free_ticket():
 	return brain.feet_tickets>0 and brain.request_ticket()
@@ -133,7 +129,6 @@ func take_ticket():
 	brain.feet_tickets-=1
 func return_ticket():
 	brain.feet_tickets+=1
-
 
 func set_up_position():
 	target_position = heart.global_transform.origin
@@ -154,7 +149,6 @@ func set_stopped_position():
 	target_position = self.global_transform.origin
 	#print(self.name + "STOP")
 	
-
 func init_start_position():
 	start_position = self.global_transform.origin
 
@@ -163,10 +157,6 @@ func init_end_position():
 
 func _raycast_down(position) -> Vector3:
 	return _raycast_hit_position(_raycast(position, position + Vector3(0,-100,0)))
-
-func _check_is_on_floor():
-	##TODO: Make this raycast change size based on the foot size
-	is_on_floor = _raycast_did_hit(_raycast(self.global_transform.origin, self.global_transform.origin + Vector3(0,-8,0)))
 
 func _raycast_did_hit(raycastResult:Dictionary):
 	return raycastResult.size() > 0

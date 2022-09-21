@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/LHandBig.gd" type="Script" id=2]
@@ -24,8 +24,11 @@ extents = Vector3( 0.381158, 1.37113, 1 )
 [sub_resource type="BoxShape" id=3]
 extents = Vector3( 0.242926, 0.893499, 0.524674 )
 
+[sub_resource type="BoxShape" id=6]
+extents = Vector3( 0.841514, 1.38299, 1.42586 )
+
 [sub_resource type="BoxShape" id=4]
-extents = Vector3( 0.810714, 1.47193, 1.11377 )
+extents = Vector3( 0.317243, 1.47193, 1.11377 )
 
 [sub_resource type="ShaderMaterial" id=5]
 render_priority = 1
@@ -60,8 +63,7 @@ far = 300.0
 
 [node name="SpotLight" type="SpotLight" parent="ARVROrigin/ARVRCamera"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3 )
-light_color = Color( 0.996078, 0.682353, 0.203922, 1 )
-shadow_enabled = true
+light_color = Color( 0.929412, 0.776471, 0.541176, 1 )
 spot_range = 80.0
 spot_attenuation = 2.2974
 
@@ -111,7 +113,12 @@ transform = Transform( -0.866026, 8.74228e-08, -0.5, -7.57104e-08, -1, -4.37114e
 shape = SubResource( 3 )
 
 [node name="ClosedHandShape" type="CollisionShape" parent="LeftHandBig"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4557, 0.327753, -0.117336 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.56054, 0.327753, -0.443077 )
+shape = SubResource( 6 )
+disabled = true
+
+[node name="GrabbedHandShape" type="CollisionShape" parent="LeftHandBig"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00893882, 0.327753, -0.117336 )
 shape = SubResource( 4 )
 disabled = true
 
@@ -129,6 +136,11 @@ transform = Transform( 4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, 1, 4.3
 stream = ExtResource( 8 )
 unit_db = 15.0
 bus = "Smashes"
+
+[node name="RayCast" type="RayCast" parent="LeftHandBig"]
+transform = Transform( -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0.298716, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -2, 0 )
 
 [node name="RightHandBig" type="RigidBody" parent="." groups=["Player"]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10 )
@@ -164,7 +176,7 @@ shape = SubResource( 3 )
 
 [node name="ClosedHandShape" type="CollisionShape" parent="RightHandBig"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.52215, 0.163877, -0.18164 )
-shape = SubResource( 4 )
+shape = SubResource( 6 )
 disabled = true
 
 [node name="RobotHand" parent="RightHandBig" instance=ExtResource( 4 )]
@@ -174,6 +186,16 @@ transform = Transform( 8.74228e-08, 1, 4.37114e-08, -4.37114e-08, -4.37114e-08, 
 stream = ExtResource( 8 )
 unit_db = 20.0
 bus = "Smashes"
+
+[node name="RayCast" type="RayCast" parent="RightHandBig"]
+transform = Transform( -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.332854, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, 2, 0 )
+
+[node name="GrabbedHandShape" type="CollisionShape" parent="RightHandBig"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00893882, 0.327753, -0.117336 )
+shape = SubResource( 4 )
+disabled = true
 
 [node name="Rotated" type="Spatial" parent="."]
 script = ExtResource( 6 )
@@ -207,8 +229,3 @@ transform = Transform( 0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, -0.4, 0 )
 cast_shadow = 2
 mesh = ExtResource( 13 )
 material/0 = ExtResource( 12 )
-
-[connection signal="body_shape_entered" from="LeftHandBig" to="LeftHandBig" method="_on_body_shape_entered"]
-[connection signal="body_shape_exited" from="LeftHandBig" to="LeftHandBig" method="_on_body_shape_exited"]
-[connection signal="body_shape_entered" from="RightHandBig" to="RightHandBig" method="_on_body_shape_entered"]
-[connection signal="body_shape_exited" from="RightHandBig" to="RightHandBig" method="_on_body_shape_exited"]

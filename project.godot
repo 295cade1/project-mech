@@ -33,7 +33,7 @@ _global_script_class_icons={
 [application]
 
 config/name="ProjectMech"
-run/main_scene="res://Scenes/Main.tscn"
+run/main_scene="res://Scenes/KaijuCreator.tscn"
 config/icon="res://icon.png"
 
 [editor_plugins]
@@ -66,6 +66,9 @@ quality/reflections/high_quality_ggx=false
 quality/shading/force_vertex_shading=true
 quality/shading/force_lambert_over_burley=true
 quality/shading/force_blinn_over_ggx=true
-quality/filters/msaa=6
+quality/depth_prepass/enable=false
+quality/filters/anisotropic_filter_level=2
+gles2/compatibility/disable_half_float=true
+gles2/compatibility/enable_high_float.Android=true
 quality/depth/hdr=false
 environment/default_environment="res://default_env.tres"

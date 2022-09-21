@@ -3,21 +3,18 @@
 [ext_resource path="res://Enemy/EnemyCreator.gd" type="Script" id=1]
 [ext_resource path="res://Enemy/Renderer.gd" type="Script" id=2]
 [ext_resource path="res://Scripts/MovingSphere.tres" type="Material" id=3]
-
-[sub_resource type="SphereMesh" id=1]
-material = ExtResource( 3 )
-radial_segments = 8
-rings = 4
+[ext_resource path="res://Enemy/obj/rock.obj" type="ArrayMesh" id=4]
 
 [sub_resource type="MultiMesh" id=2]
 color_format = 2
 transform_format = 1
 custom_data_format = 2
-mesh = SubResource( 1 )
+mesh = ExtResource( 4 )
 
 [node name="Enemy" type="Spatial"]
 script = ExtResource( 1 )
 
 [node name="Renderer" type="MultiMeshInstance" parent="."]
+material_override = ExtResource( 3 )
 multimesh = SubResource( 2 )
 script = ExtResource( 2 )

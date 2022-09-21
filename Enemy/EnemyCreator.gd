@@ -16,13 +16,15 @@ var brain_index
 const UNITMASS = 1
 
 var foot_size = 3
-var body_size = 2
+var body_size = 3.5
 var heart_size = 5 
-var brain_size = 4
+var brain_size = 4.5
 var hand_size = 3
 var regular_size = 1.5
 var straight_size = 1.5
 var joint_size = 2
+
+var size = 1
 
 onready var globalMaterial = load("res://Enemy/materials/Skin.tres")
 onready var heartMaterial = load("res://Enemy/materials/Heart.tres")
@@ -35,30 +37,95 @@ onready var limbScript = load("res://Enemy/Limb.gd")
 onready var handScript = load("res://Enemy/Hand.gd")
 
 
+func create_kaiju(base_size, string : String):
+	size = base_size
+	var node_num = 0
+	var nodes = []
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	create_skeleton()
+	for i in range(0, string.length()):
+		match(string[i]):
+			"r":
+				nodes.append(create_root_node())
+				node_num += 1
+			"f":
+				var base_index = nodes[node_num - int(string[i + 1])]
+				var pos_offset = Vector3(float(string[i + 2]) - 5, float(string[i + 3]) - 5, float(string[i + 4]) - 5)
+				nodes.append(create_straight_node(base_index, pos_offset))
+				node_num += 1
+			"n":
+				var base_index = nodes[node_num - int(string[i + 1])]
+				var pos_offset = Vector3(float(string[i + 2]) - 5, float(string[i + 3]) - 5, float(string[i + 4]) - 5)
+				nodes.append(create_limb_node(base_index, pos_offset))
+				node_num += 1
+			"j":
+				var base_index = nodes[node_num - int(string[i + 1])]
+				var pos_offset = Vector3(float(string[i + 2]) - 5, float(string[i + 3]) - 5, float(string[i + 4]) - 5)
+				nodes.append(create_joint_node(base_index, pos_offset))
+				node_num += 1
+			"b":
+				var base_index = nodes[node_num - int(string[i + 1])]
+				var pos_offset = Vector3(float(string[i + 2]) - 5, float(string[i + 3]) - 5, float(string[i + 4]) - 5)
+				nodes.append(create_body_node(base_index, pos_offset))
+				node_num += 1
+			"q":
+				var base_index = nodes[node_num - int(string[i + 1])]
+				var pos_offset = Vector3(float(string[i + 2]) - 5, float(string[i + 3]) - 5, float(string[i + 4]) - 5)
+				nodes.append(create_brain_node(base_index, pos_offset))
+				node_num += 1
+			"A":
+				var base_index = nodes[node_num - int(string[i + 1])]
+				var length = int(string[i + 2])
+				var pos_offset = Vector3(float(string[i + 3]) - 5, float(string[i + 4]) - 5, float(string[i + 5]) - 5)
+				create_arm(base_index, pos_offset, length)
+			"L":
+				var base_index = nodes[node_num - int(string[i + 1])]
+				var length = int(string[i + 2])
+				var pos_offset = Vector3(float(string[i + 3]) - 5, float(string[i + 4]) - 5, float(string[i + 5]) - 5)
+				create_leg(base_index, pos_offset, length)
+			"B":
+				var base_index = nodes[node_num - int(string[i + 1])]
+				var length = int(string[i + 2])
+				var pos_offset = Vector3(float(string[i + 3]) - 5, float(string[i + 4]) - 5, float(string[i + 5]) - 5)
+				nodes.append(create_body_chain(base_index, pos_offset, length))
+				node_num += 1
+			"N":
+				var base_index = nodes[node_num - int(string[i + 1])]
+				var length = int(string[i + 2])
+				var pos_offset = Vector3(float(string[i + 3]) - 5, float(string[i + 4]) - 5, float(string[i + 5]) - 5)
+				nodes.append(create_limb_chain(base_index, pos_offset, length))
+				node_num += 1
+			"F":
+				var base_index = nodes[node_num - int(string[i + 1])]
+				var length = int(string[i + 2])
+				var pos_offset = Vector3(float(string[i + 3]) - 5, float(string[i + 4]) - 5, float(string[i + 5]) - 5)
+				nodes.append(create_straight_chain(base_index, pos_offset, length))
+				node_num += 1
+			"J":
+				var base_index = nodes[node_num - int(string[i + 1])]
+				var length = int(string[i + 2])
+				var pos_offset = Vector3(float(string[i + 3]) - 5, float(string[i + 4]) - 5, float(string[i + 5]) - 5)
+				nodes.append(create_joint_chain(base_index, pos_offset, length))
+				node_num += 1
+			
+
 	finalize()
 
-func create_skeleton():
-	create_root_node()
-	create_body_node(0,Vector3(0,1,0))
-	create_brain_node(1,Vector3(0,1,0))
-
-	create_leg(0,Vector3(1,-2,0),8)
-	create_leg(0,Vector3(-1,-2,0),8)
-
-	
-	create_arm(1,Vector3(1,0,0),8)
-	create_arm(1,Vector3(-1,0,0),8) 
+func clear():
+	limbs = []
+	arms = []
+	hands = []
+	feet = []
+	legs = []
+	brain_index = 0
+	for i in range(1, get_child_count()):
+		get_child(i).queue_free()
+	get_child(0).clear()
 
 
 
 func finalize():
-
 	set_limb_new_script(limbs[brain_index],brainScript)
-	limbs[brain_index].initialize(len(feet))
+	limbs[brain_index].initialize(feet.size(),hands.size(), get_average_arm_length(), limbs[0])
 	for f in range(len(feet)):
 		set_limb_new_script(limbs[feet[f]],footScript)
 		limbs[feet[f]].initialize(feet[f],legs[f],limbs[brain_index],limbs[0])
@@ -71,27 +138,30 @@ func finalize():
 
 	for h in range(len(hands)):
 		set_limb_new_script(limbs[hands[h]],handScript)
-		limbs[hands[h]].initialize(limbs[brain_index], limbs[legs[h]])
+		limbs[hands[h]].initialize(limbs[brain_index], limbs[arms[h]])
 
 	get_child(0).initialize()
+
+func get_average_arm_length():
+	var average = 0
+	for i in range(0, arms.size()):
+		var arm = limbs[arms[i]]
+		var hand = limbs[hands[i]]
+		average += arm.transform.origin.distance_to(hand.transform.origin)
+	return average / arms.size()
+
+
 
 #High Level Functions
 func create_arm(parent_index:int, offset, amount:int):
 	arms.append(parent_index)
 	var last_index = create_limb_chain(parent_index,offset,amount-1)
-	return create_hand_node(last_index)
+	return create_hand_node(last_index, offset)
 
 func create_leg(parent_index:int, offset, amount:int):
 	legs.append(parent_index)
-	var last_index = create_segmented_section(parent_index,offset,amount-1,2)
-	return create_foot_node(last_index)
-
-func create_segmented_section(parent_index:int, offset, amount_per_segment:int, segments:int):
-	var last_index = parent_index
-	for _i in range(segments):
-		last_index = create_joint_node(last_index,offset)
-		last_index = create_straight_chain(last_index,offset,int(amount_per_segment/segments)-1)
-	return last_index
+	var last_index = create_limb_chain(parent_index,offset,amount-1)
+	return create_foot_node(last_index, offset)
 
 func create_straight_chain(parent_index:int, offset, amount:int):
 	var last_id_val = create_straight_node(parent_index,offset)
@@ -111,32 +181,38 @@ func create_limb_chain(parent_index:int, offset, amount:int):
 		last_id_val = create_limb_node(last_id_val,offset)
 	return last_id_val
 
+func create_joint_chain(parent_index:int, offset, amount:int):
+	var last_id_val = create_body_node(parent_index,offset)
+	for _i in range(0,amount-1):
+		last_id_val = create_joint_node(last_id_val,offset)
+	return last_id_val
+
 func create_root_node():
-	return create_limb(limb_type.ROOT,joint_type.NONE, heart_size, heartMaterial)
+	return create_limb(limb_type.ROOT,joint_type.NONE, heart_size * size, heartMaterial)
 
 func create_limb_node(parent_index:int, offset):
-	return create_limb(limb_type.CHILD,joint_type.NORMAL,regular_size,globalMaterial,parent_index,offset)
+	return create_limb(limb_type.CHILD,joint_type.NORMAL,regular_size * size,globalMaterial,parent_index,offset)
 
 func create_joint_node(parent_index:int, offset):
-	return create_limb(limb_type.CHILD,joint_type.JOINT,joint_size,globalMaterial,parent_index,offset)
+	return create_limb(limb_type.CHILD,joint_type.JOINT,joint_size * size,globalMaterial,parent_index,offset)
 
 func create_straight_node(parent_index:int, offset):
-	return create_limb(limb_type.CHILD,joint_type.FIXED,straight_size,globalMaterial,parent_index,offset)
+	return create_limb(limb_type.CHILD,joint_type.FIXED,straight_size * size,globalMaterial,parent_index,offset)
 
 func create_body_node(parent_index:int, offset):
-	return create_limb(limb_type.CHILD,joint_type.FIXED,body_size,globalMaterial,parent_index,offset)
+	return create_limb(limb_type.CHILD,joint_type.FIXED,body_size * size,globalMaterial,parent_index,offset)
 
 func create_brain_node(parent_index:int, offset):
-	brain_index = create_limb(limb_type.CHILD,joint_type.FIXED,brain_size,brainMaterial,parent_index,offset)
+	brain_index = create_limb(limb_type.CHILD,joint_type.FIXED,brain_size * size,brainMaterial,parent_index,offset)
 	return brain_index
 
-func create_foot_node(parent_index:int):
-	var foot = create_limb(limb_type.CHILD,joint_type.NORMAL,foot_size,globalMaterial,parent_index,Vector3(0,-1,0))
+func create_foot_node(parent_index:int, offset:Vector3):
+	var foot = create_limb(limb_type.CHILD,joint_type.NORMAL,foot_size * size,globalMaterial,parent_index,offset)
 	feet.append(foot)
 	return foot
 
-func create_hand_node(parent_index:int):
-	var hand = create_limb(limb_type.CHILD,joint_type.NORMAL,hand_size,globalMaterial,parent_index,Vector3(0,1,0))
+func create_hand_node(parent_index:int, offset:Vector3):
+	var hand = create_limb(limb_type.CHILD,joint_type.NORMAL,hand_size * size,globalMaterial,parent_index,offset)
 	hands.append(hand)
 	return hand
 
@@ -182,8 +258,8 @@ func create_child_limb(_limb_index:int, radius:float, mat:Material, parent_limb,
 	var limb = create_base_limb(position, radius, mat)
 
 	if(is_limb_location_clear(radius+parent_radius,position,parent_limb)):
-		assert(false,"tried to place limb in an already placed location")
-		return
+		print("tried to place limb in an already placed location")
+		#return
 	return limb
 
 #Checks if the new node would collide with another node
@@ -240,17 +316,24 @@ func create_cone_twist_joint(swing_span:float, twist_span:float, position:Vector
 
 	var current_rotation = joint.transform.basis.x
 	var rotation_axis = get_rotation_axis(current_rotation,direction)
-	if(rotation_axis!=null):
-		var rotation_amount = get_rotation_amount(current_rotation,direction)
-		joint.rotate(rotation_axis,rotation_amount)
+
+	if(rotation_axis == null): return joint
+	if(!rotation_axis.is_normalized()): return joint
+
+	var rotation_amount = get_rotation_amount(current_rotation.normalized(),direction.normalized())
+	joint.rotate(rotation_axis.normalized(),rotation_amount)
 	return joint
 
 func get_rotation_axis(current_rotation, target_rotation):
+	current_rotation = current_rotation.normalized()
+	target_rotation = target_rotation.normalized()
 	if(current_rotation!=target_rotation):
 		return current_rotation.cross(target_rotation).normalized()
 	return null # Returns null if we are already rotated the same direction
 
 func get_rotation_amount(current_rotation:Vector3,target_rotation:Vector3):
+	current_rotation = current_rotation.normalized()
+	target_rotation = target_rotation.normalized()
 	return current_rotation.angle_to(target_rotation)
 
 

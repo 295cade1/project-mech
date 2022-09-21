@@ -4,8 +4,9 @@
 *.dblite
 *.exp
 *.lib
-*.obj
 *.TMP
+*.DS_STORE
 logs
 Thumbs.db
 Sounds/RAW/
+.mono/metadata/ide_messaging_meta.txt

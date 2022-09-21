@@ -3,10 +3,10 @@ extends "res://Enemy/Limb.gd"
 enum {IDLE, WINDUP, ATTACK, TIRED}
 var state : int = IDLE
 
-var MAXFORCE = 200
-const WINDUPTIME = 5
-const ATTACKTIME = 2
-const TIREDTIME = 10
+var MAXFORCE = 400
+const WINDUPTIME = 0.10
+const ATTACKTIME = 0.05
+const TIREDTIME = 0.2
 
 var time = 0
 
@@ -33,25 +33,22 @@ func initialize(base_brain, base_arm_root):
 
 
 func _integrate_forces(phys_state):
+	._integrate_forces(phys_state)
 	if(destroyed):
 		return
-	._integrate_forces(phys_state)
-	#if(state != 0):
-	#	print("state: " + str(state))
-	#	print("Timer: " + str(time))
 	if(time >= 0):
 		time -= phys_state.get_step()
 	var force = 0
 	match state:
 		IDLE:
-			if(_target_in_range()):
+			if(_target_in_range() and brain.request_arm_ticket()):
 				_switch_to_windup()
 		WINDUP:
-			force = 40
+			force = 60
 			if(time < 0):
 				_switch_to_attack()
 		ATTACK:
-			force = 200
+			force = 160
 			target_location = brain.target_location
 			if(time < 0):
 				_switch_to_tired()
@@ -73,29 +70,30 @@ func move_towards_location(target_position, force, phys_state):
 	phys_state.add_central_force(velocity_difference/(velocity_difference.length()/(force * mass)))
 
 func _target_in_range() -> bool:
-	return brain.target_location.distance_to(arm_root.global_transform.origin) < min(arm_length,40)
+	return brain.target_location.distance_to(self.global_transform.origin) < arm_length - 1
 
 func _switch_to_windup():
 	state = WINDUP
-	time = WINDUPTIME
+	time = WINDUPTIME * arm_length
 	target_location = _get_windup_location()
 
 func _switch_to_attack():
 	state = ATTACK
-	time = ATTACKTIME
+	time = ATTACKTIME * arm_length
 	target_location = brain.target_location
 
 func _switch_to_tired():
+	brain.return_arm_ticket()
 	state = TIRED
-	time = TIREDTIME
+	time = TIREDTIME * arm_length
 	target_location = Vector3(INF,INF,INF)
 
 func _switch_to_idle():
 	state = IDLE
 
 func _get_windup_location() -> Vector3:
-	var offset_vector = self.global_transform.origin - brain.target_location
-	var base_vector = arm_root.global_transform.origin + hand_base_offset
+	var offset_vector = (self.global_transform.origin - brain.target_location).normalized() * arm_length
+	var base_vector = brain.global_transform.basis.xform(arm_root.global_transform.origin + hand_base_offset)
 	return offset_vector + base_vector
 	
 
