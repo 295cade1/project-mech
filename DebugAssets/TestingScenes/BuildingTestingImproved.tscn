@@ -32,3 +32,6 @@ can_sleep = false
 [node name="CollisionShape" type="CollisionShape" parent="BuildingCollision"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
 shape = SubResource( 2 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.62499, 25.6204 )

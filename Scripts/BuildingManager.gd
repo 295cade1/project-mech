@@ -3,7 +3,7 @@ extends Node
 const SEAHEIGHT = 35
 
 const MINBUILDINGHEIGHT = 5
-const MAXBUILDINGHEIGHT = 50
+const MAXBUILDINGHEIGHT = 20
 
 const CHANCEFORBUILDING = float(3.0/5.0)
 
@@ -45,7 +45,7 @@ func _place_building(location, type):
 	transform.basis = transform.basis.rotated(Vector3.UP, rand.randf_range(-PI, PI))
 	
 	var height = (randi() % (MAXBUILDINGHEIGHT - MINBUILDINGHEIGHT)) + MINBUILDINGHEIGHT
-	var width = (randi() % (30 - 15)) + 15
+	var width = (randi() % (20 - 10)) + 10
 	building_points.append(location)
 	building_multimesh.create_building(transform, height, width)
 	

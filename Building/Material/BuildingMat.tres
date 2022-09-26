@@ -22,15 +22,15 @@ uniform sampler2D upper_roughness;
 
 void vertex(){
 	if(VERTEX.y > 0.0){
-		VERTEX.y = COLOR.g;
+		VERTEX.y = INSTANCE_CUSTOM.g;
 	}else{
 		VERTEX.y = -0.5;
 	}
-	VERTEX.x = VERTEX.x * COLOR.r;
-	VERTEX.z = VERTEX.z * COLOR.b;
+	VERTEX.x = VERTEX.x * INSTANCE_CUSTOM.r;
+	VERTEX.z = VERTEX.z * INSTANCE_CUSTOM.b;
 	pos = VERTEX;
 	UV.y = pos.y + 0.5;
-	UV.y = -UV.y / 18.0;
+	UV.y = -UV.y / 9.0;
 	UV.x = UV.x * 3.0;
 }
 
@@ -39,7 +39,7 @@ void fragment(){
 	vec4 roughness_tex;
 	vec4 emission_tex;
 	vec4 normal_tex;
-	if(pos.y < 8.5f){
+	if(pos.y < 8.5){
 		albedo_tex = texture(lower_albedo, UV);
 		emission_tex = texture(lower_emission, UV);
 		roughness_tex = texture(lower_roughness, UV);

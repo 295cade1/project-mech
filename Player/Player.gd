@@ -54,12 +54,8 @@ func _runtime_config():
 func _integrate_forces(state):
 	if(timer >= 0):
 		timer -= state.get_step()
-	_player_movement(state)
 	_damage_detection(state)
 
-func _player_movement(state):
-	var extra_movement_vector = big_hand_right.player_movement_vector + big_hand_left.player_movement_vector
-	state.add_central_force(extra_movement_vector * 10)
 
 #Deals with player damaging
 func _damage_detection(state):
@@ -91,4 +87,4 @@ func _damage():
 	if(timer < 0):
 		health -= 1
 		timer = player_inv_time
-		$DamagePlayer.play()
+		#$DamagePlayer.play()

@@ -7,7 +7,7 @@ var target : Spatial
 func _ready():
 	var child = get_child(0)
 	joints.append(child)
-	while (child.get_child_count()>0):
+	while (child.get_child_count()>0 && !child.get_child(0) is MeshInstance):
 		child = child.get_child(0) as Spatial
 		joints.append(child)
 	endEffector = joints[joints.size()-1]
@@ -18,9 +18,9 @@ func _ready():
 func _process(delta):
 	var distance_from_target = endEffector.global_transform.origin.distance_to(target.global_transform.origin)
 	var runs = 0
-	while distance_from_target > 5 && runs < 10000:
+	while distance_from_target > 0.5 && runs < 100:
 		runs+=1
-		for j in range(joints.size()-1):
+		for j in range(joints.size()-2):
 			var joint = joints[j]
 			var joint_position = joint.global_transform.origin
 
@@ -70,10 +70,10 @@ func _process(delta):
 				var Bi = theta - angle_b
 				joint_rotate(joint, Bi, vector_rotation)
 		distance_from_target = endEffector.global_transform.origin.distance_to(target.global_transform.origin)
+	print(runs)
+
 
 func joint_rotate(joint, angle, axis):
-
-	if(axis.length()>=.9 && angle > 0):
-		joint.rotate((axis.normalized()),angle)
-#	else:
-#		print("failed")
+	if is_nan(angle) || is_nan(axis.x):
+		return
+	joint.rotate((axis),angle)

@@ -26,7 +26,7 @@ func clear():
 	rendering = false
 
 
-func _process(delta):
+func _physics_process(delta):
 	if(!rendering): return
 	for i in range(children.size()):
 		var position = Transform()

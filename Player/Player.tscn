@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/LHandBig.gd" type="Script" id=2]
@@ -6,7 +6,7 @@
 [ext_resource path="res://Player/RobotHand.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Player/PlayerArm.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Player/CameraRotated.gd" type="Script" id=6]
-[ext_resource path="res://Assets/Environment/Water/WaterNoise.tres" type="Texture" id=7]
+[ext_resource path="res://Scripts/HandJoint.gd" type="Script" id=7]
 [ext_resource path="res://Sounds/Used/Thud/Thud1.wav" type="AudioStream" id=8]
 [ext_resource path="res://Sounds/Used/PlayerDamaged.wav" type="AudioStream" id=9]
 [ext_resource path="res://Assets/Player/Metal.tres" type="Material" id=10]
@@ -14,9 +14,18 @@
 [ext_resource path="res://Assets/Player/Grate.tres" type="Material" id=12]
 [ext_resource path="res://Assets/Player/Platform.tres" type="ArrayMesh" id=13]
 [ext_resource path="res://Assets/Player/Bubble.tres" type="ArrayMesh" id=14]
+[ext_resource path="res://DebugAssets/TestingScripts/QuatJoint6DOF_G_by_Basis_Motor_Velocity.gd" type="Script" id=15]
+
+[sub_resource type="PhysicsMaterial" id=8]
+friction = 0.1
+bounce = 0.1
 
 [sub_resource type="SphereShape" id=1]
 radius = 2.0
+
+[sub_resource type="PhysicsMaterial" id=7]
+friction = 0.8
+rough = true
 
 [sub_resource type="BoxShape" id=2]
 extents = Vector3( 0.381158, 1.37113, 1 )
@@ -33,18 +42,18 @@ extents = Vector3( 0.317243, 1.47193, 1.11377 )
 [sub_resource type="ShaderMaterial" id=5]
 render_priority = 1
 shader = ExtResource( 11 )
-shader_param/glass_color = Color( 1, 0.470588, 0, 1 )
-shader_param/water_color = Color( 0, 0.180392, 1, 1 )
+shader_param/glass_color = null
+shader_param/water_color = null
 shader_param/height_scale = 10.0
 shader_param/speed = 1.0
 shader_param/water_plane_height = 30.0
-shader_param/opacity = 1.0
-shader_param/noise = ExtResource( 7 )
+shader_param/opacity = null
 
 [node name="Player" type="RigidBody" groups=["Player"]]
 collision_layer = 2
 collision_mask = 2
-mass = 100.0
+mass = 200.0
+physics_material_override = SubResource( 8 )
 continuous_cd = true
 contacts_reported = 30
 contact_monitor = true
@@ -89,7 +98,7 @@ shape = SubResource( 1 )
 [node name="LeftHandBig" type="RigidBody" parent="." groups=["Player"]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10 )
 mass = 100.0
-continuous_cd = true
+physics_material_override = SubResource( 7 )
 contacts_reported = 4
 contact_monitor = true
 can_sleep = false
@@ -122,13 +131,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00893882, 0.327753, -0.1173
 shape = SubResource( 4 )
 disabled = true
 
-[node name="CSGBox" type="CSGBox" parent="LeftHandBig"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1 )
-visible = false
-width = 0.75968
-height = 2.71008
-depth = 4.14586
-
 [node name="RobotHand" parent="LeftHandBig" instance=ExtResource( 4 )]
 transform = Transform( 4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, 1, 4.37114e-08, 1.91069e-15, 0, 0, 0 )
 
@@ -142,22 +144,47 @@ transform = Transform( -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0.29871
 enabled = true
 cast_to = Vector3( 0, -2, 0 )
 
+[node name="Joint" type="Spatial" parent="LeftHandBig"]
+script = ExtResource( 7 )
+handPath = NodePath("..")
+translational_force = 12000.0
+rotational_force = 12345.0
+
+[node name="Generic6DOFJoint" type="Generic6DOFJoint" parent="LeftHandBig/Joint"]
+nodes/node_a = NodePath("../../..")
+nodes/node_b = NodePath("../..")
+linear_limit_x/upper_distance = 40.0
+linear_limit_x/lower_distance = -40.0
+linear_motor_x/enabled = true
+linear_motor_x/force_limit = 100.0
+angular_limit_x/enabled = false
+angular_motor_x/enabled = true
+linear_limit_y/upper_distance = 40.0
+linear_limit_y/lower_distance = -40.0
+linear_motor_y/enabled = true
+linear_motor_y/target_velocity = -1.0
+linear_motor_y/force_limit = 100.0
+angular_limit_y/enabled = false
+angular_motor_y/enabled = true
+linear_limit_z/upper_distance = 40.0
+linear_limit_z/lower_distance = -40.0
+linear_motor_z/enabled = true
+linear_motor_z/force_limit = 100.0
+angular_limit_z/enabled = false
+angular_motor_z/enabled = true
+script = ExtResource( 15 )
+stiffnessB = 0.1
+puppeteer_node = NodePath("../../../ARVROrigin/LeftController")
+
 [node name="RightHandBig" type="RigidBody" parent="." groups=["Player"]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10 )
 mass = 100.0
-continuous_cd = true
+physics_material_override = SubResource( 7 )
 contacts_reported = 4
 contact_monitor = true
 can_sleep = false
 script = ExtResource( 2 )
 target_hand_path = NodePath("../ARVROrigin/RightController")
-
-[node name="CSGBox2" type="CSGBox" parent="RightHandBig"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1 )
-visible = false
-width = 0.75968
-height = 2.71008
-depth = 4.14586
 
 [node name="OpenHandShape1" type="CollisionShape" parent="RightHandBig"]
 shape = SubResource( 2 )
@@ -196,6 +223,38 @@ cast_to = Vector3( 0, 2, 0 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00893882, 0.327753, -0.117336 )
 shape = SubResource( 4 )
 disabled = true
+
+[node name="Joint" type="Spatial" parent="RightHandBig"]
+script = ExtResource( 7 )
+handPath = NodePath("..")
+translational_force = 12000.0
+rotational_force = 12345.0
+
+[node name="Generic6DOFJoint" type="Generic6DOFJoint" parent="RightHandBig/Joint"]
+nodes/node_a = NodePath("../../..")
+nodes/node_b = NodePath("../..")
+linear_limit_x/upper_distance = 40.0
+linear_limit_x/lower_distance = -40.0
+linear_motor_x/enabled = true
+linear_motor_x/force_limit = 100.0
+angular_limit_x/enabled = false
+angular_motor_x/enabled = true
+linear_limit_y/upper_distance = 40.0
+linear_limit_y/lower_distance = -40.0
+linear_motor_y/enabled = true
+linear_motor_y/target_velocity = -1.0
+linear_motor_y/force_limit = 100.0
+angular_limit_y/enabled = false
+angular_motor_y/enabled = true
+linear_limit_z/upper_distance = 40.0
+linear_limit_z/lower_distance = -40.0
+linear_motor_z/enabled = true
+linear_motor_z/force_limit = 100.0
+angular_limit_z/enabled = false
+angular_motor_z/enabled = true
+script = ExtResource( 15 )
+stiffnessB = 0.1
+puppeteer_node = NodePath("../../../ARVROrigin/RightController")
 
 [node name="Rotated" type="Spatial" parent="."]
 script = ExtResource( 6 )

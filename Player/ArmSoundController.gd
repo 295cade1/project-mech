@@ -12,8 +12,9 @@ var previous_elbow_target_dir = Vector3(0,1,0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	base_player.play(base_player.global_transform.origin.y/base_player.stream.get_length())
-	elbow_player.play(elbow_player.global_transform.origin.y/elbow_player.stream.get_length())
+	pass
+	#base_player.play(base_player.global_transform.origin.y/base_player.stream.get_length())
+	#elbow_player.play(elbow_player.global_transform.origin.y/elbow_player.stream.get_length())
 	
 func _physics_process(delta):
 	var base_elbow_dir = elbow.transform.origin - base.transform.origin

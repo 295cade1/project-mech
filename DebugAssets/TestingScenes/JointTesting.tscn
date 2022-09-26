@@ -19,7 +19,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="RigidBody"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="Generic6DOFJoint" type="Generic6DOFJoint" parent="."]
 transform = Transform( -1, 0, 8.9407e-08, 0, 1, 0, -8.9407e-08, 0, -1, -1, 0, 0.0342052 )
@@ -40,7 +39,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="RigidBody2"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6.68262 )

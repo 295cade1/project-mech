@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://DebugAssets/TestingScenes/Generic6DOFJoint.gd" type="Script" id=1]
+[ext_resource path="res://DebugAssets/TestingScripts/QuatJoint6DOF_G_by_Basis_Motor_Velocity.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/HandJoint.gd" type="Script" id=2]
 
 [sub_resource type="SphereShape" id=1]
 
@@ -23,6 +24,7 @@ depth = 10.0
 
 [node name="Main" type="RigidBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
+mass = 10.0
 can_sleep = false
 axis_lock_angular_x = true
 axis_lock_angular_y = true
@@ -35,10 +37,8 @@ shape = SubResource( 1 )
 
 [node name="Hand" type="RigidBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 3, 0 )
+mass = 5.0
 can_sleep = false
-axis_lock_angular_x = true
-axis_lock_angular_y = true
-axis_lock_angular_z = true
 
 [node name="CollisionShape" type="CollisionShape" parent="Hand"]
 shape = SubResource( 2 )
@@ -46,28 +46,42 @@ shape = SubResource( 2 )
 [node name="CSGBox" type="CSGBox" parent="Hand"]
 width = 3.52177
 
-[node name="Generic6DOFJoint" type="Generic6DOFJoint" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 3, 0 )
-nodes/node_a = NodePath("../Main")
-nodes/node_b = NodePath("../Hand")
-linear_limit_x/upper_distance = 10.0
-linear_limit_x/lower_distance = -10.0
-linear_motor_x/enabled = true
-linear_motor_x/force_limit = 1000.0
-linear_limit_y/upper_distance = 10.0
-linear_limit_y/lower_distance = -10.0
-linear_motor_y/enabled = true
-linear_motor_y/force_limit = 1000.0
-angular_limit_y/enabled = false
-linear_limit_z/upper_distance = 10.0
-linear_limit_z/lower_distance = -10.0
-linear_motor_z/enabled = true
-linear_motor_z/force_limit = 1000.0
-angular_motor_z/target_velocity = 100.0
-script = ExtResource( 1 )
-
 [node name="Target" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.28188, 5.55803, 0 )
 
 [node name="CSGSphere" type="CSGSphere" parent="Target"]
 material = SubResource( 3 )
+
+[node name="HandJoint" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 3, 0 )
+script = ExtResource( 2 )
+targetPath = NodePath("../Target")
+handPath = NodePath("../Hand")
+playerPath = NodePath("../Main")
+
+[node name="Generic6DOFJoint" type="Generic6DOFJoint" parent="HandJoint"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0 )
+nodes/node_a = NodePath("../../Main")
+nodes/node_b = NodePath("../../Hand")
+linear_limit_x/upper_distance = 10.0
+linear_limit_x/lower_distance = -10.0
+linear_motor_x/enabled = true
+linear_motor_x/force_limit = 100.0
+angular_limit_x/enabled = false
+angular_motor_x/enabled = true
+linear_limit_y/upper_distance = 10.0
+linear_limit_y/lower_distance = -10.0
+linear_motor_y/enabled = true
+linear_motor_y/target_velocity = -1.0
+linear_motor_y/force_limit = 100.0
+angular_limit_y/enabled = false
+angular_motor_y/enabled = true
+linear_limit_z/upper_distance = 10.0
+linear_limit_z/lower_distance = -10.0
+linear_motor_z/enabled = true
+linear_motor_z/force_limit = 100.0
+angular_limit_z/enabled = false
+angular_motor_z/enabled = true
+script = ExtResource( 1 )
+stiffnessB = 0.1
+dampingB = 0.1

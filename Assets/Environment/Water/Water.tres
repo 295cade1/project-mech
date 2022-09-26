@@ -9,7 +9,7 @@ void vertex() {
 
 void fragment() {
 	// same normal vector for every face
-	NORMAL = normalize(cross(dFdx(VERTEX), dFdy(VERTEX)));
+	NORMAL = normalize(cross(VERTEX, VERTEX));
 	// green color
 	vec3 material_color = COLOR.rgb;
 	ALBEDO = material_color;

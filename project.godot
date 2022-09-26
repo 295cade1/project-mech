@@ -33,7 +33,7 @@ _global_script_class_icons={
 [application]
 
 config/name="ProjectMech"
-run/main_scene="res://Scenes/KaijuCreator.tscn"
+run/main_scene="res://Scenes/Main.tscn"
 config/icon="res://icon.png"
 
 [editor_plugins]
@@ -50,9 +50,10 @@ phys=false
 
 [physics]
 
-common/physics_fps=90
+common/physics_fps=45
 3d/physics_engine="Bullet"
 3d/active_soft_world=false
+common/main_scene="res://Scenes/KaijuCreator.tscn"
 
 [rendering]
 

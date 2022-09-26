@@ -7,7 +7,7 @@ varying float water_height;
 uniform vec4 glass_color : hint_color;
 uniform vec4 water_color : hint_color;
 
-uniform float height_scale = 10f;
+uniform float height_scale = 10.0f;
 uniform float speed = 1;
 uniform sampler2D noise;
 
@@ -23,7 +23,7 @@ float getHeight(vec2 position, float time) {
 }
 
 void vertex(){
-	pos = VERTEX.xz/10f;
+	pos = VERTEX.xz/10.0f;
 	float k = getHeight(pos, TIME*speed);
 	height = VERTEX.y;
 	water_height = water_plane_height + (float(height_scale) * (k - 0.5));

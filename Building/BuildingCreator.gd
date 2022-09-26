@@ -26,7 +26,7 @@ func damage(amount, building_rigidbody):
 			building.damage(amount)
 			return
 
-func _process(delta):
+func _physics_process(delta):
 	for building in buildings:
 		building.update(delta)
 	
@@ -55,11 +55,12 @@ class Building:
 		width = _width
 
 		multimesh = _multimesh
-		multimesh.set_instance_color(instance_num, Color(width,(_height * 6.0) + 0.1,width,0.0))
+		multimesh.set_instance_custom_data(instance_num, Color(width,(_height * 6.0) + 0.1,width,0.0))
 		base_transform = _transform
 		_create_rigidbody(parent_ref)
 		_update_transform(_transform)
 		_update_rigidbody()
+		
 
 	func update(delta):
 		if(timer < -1): return
@@ -77,6 +78,7 @@ class Building:
 	func _update_transform(_transform : Transform):
 		transform = _transform
 		multimesh.set_instance_transform(instance_num, _transform)
+		multimesh.reset_instance_physics_interpolation(instance_num)
 
 	func _update_rigidbody():
 		rigidbody.transform = transform

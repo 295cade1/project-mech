@@ -32,7 +32,6 @@ targetPath = NodePath("../Target")
 
 [node name="Base" type="MeshInstance" parent="."]
 mesh = SubResource( 1 )
-material/0 = null
 
 [node name="AudioPlayer" type="AudioStreamPlayer3D" parent="Base"]
 stream = ExtResource( 3 )
@@ -44,12 +43,10 @@ attenuation_filter_cutoff_hz = 200.0
 [node name="AftArm" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0 )
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="Elbow" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0 )
 mesh = SubResource( 3 )
-material/0 = null
 
 [node name="AudioPlayer" type="AudioStreamPlayer3D" parent="Elbow"]
 stream = ExtResource( 3 )
